@@ -24,6 +24,8 @@ app.listen(port, () => {
 //node server.js to run server
 //npm run devStart to use nodemon
 
+
+//register new user
 app.post('/api/insert', (req, res) => {
     const firstName = req.body.firstName
     const lastName = req.body.lastName
@@ -53,6 +55,57 @@ app.post('/api/insert', (req, res) => {
         }
     })
 });
+
+//login user
+app.get('/api/get'), (req, res) => {
+    const username = req.params.username
+    const password = req.params.password
+    console.log(username + password);
+
+    const sqlGet = `SELECT * FROM users WHERE username = ?`
+
+    db.query(sqlGet, [username], (err, result) => {
+        console.log('test')
+        console.log(result)
+        
+        if(result.length > 0) {
+            const user = result;
+            let user_hashedPassword = user.password;
+            let user_iv = user.iv;
+            let user_id = user.id;
+
+            if (encrypt(password = user_hashedPassword)) {
+                console.log(`user ${user_id} authenticated`);
+                res.status(200).send(user);
+            } else {
+                console.log(`incorrect password`);
+                res.status(401).send(`incorrect password`);
+            }
+        } else {
+            console.log(`username ${username} not found`);
+            res.send(`username ${username} not found`)
+        }
+    })
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // CREATE SCHEMA IF NOT EXISTS `blogdb` 
 

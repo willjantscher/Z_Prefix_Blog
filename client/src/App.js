@@ -6,14 +6,14 @@ import Axios from 'axios';
 //in client, npm install axios
 
 function App() {
-
+  const port = "http://localhost:3001"
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const register = () => {
-    Axios.post("http://localhost:3001/api/insert", {
+    Axios.post(`${port}/api/insert`, {
       firstName: firstName, 
       lastName: lastName, 
       username: username, 
@@ -21,7 +21,12 @@ function App() {
   };
 
   const login = () => {
-
+    Axios.get(`${port}/api/get`, {
+      // params: {
+      //   username: username,
+      //   password: password
+      // }
+    }).then((res) => console.log(res.data));
   }
 
   return (
