@@ -4,6 +4,7 @@ const cors = require ("cors")
 const app = express();
 const mysql = require("mysql");
 const { password } = require("pg/lib/defaults");
+const { response } = require("express");
 const port = 3001;
 
 const db = mysql.createPool({
@@ -24,7 +25,12 @@ app.listen(port, () => {
 //npm run devStart to use nodemon
 
 
-
+// app.get('/api/get', (req, res) => {
+//     const sqlSelect = "SELECT * FROM users"
+//     db.query(sqlSelect, (err, res) =>{
+//         res.send(res);
+//     })
+// })
 
 app.post('/api/insert', (req, res) => {
     const firstName = req.body.firstName
@@ -32,21 +38,26 @@ app.post('/api/insert', (req, res) => {
     const username = req.body.username
     const password = req.body.password
 
-    const sqlInsert = "INSERT INTO users (firstName, lastName, username, password) VALUES (?,?,?,?)"
-    db.query(sqlInsert, [firstName, lastName, username, password], (err, res) =>{
-        console.log(username + " registered");
+    //check if username already exists    
+    const sqlInsertCheck = `SELECT id FROM users WHERE username = ?`
+    const sqlInsert = `INSERT INTO users (firstName, lastName, username, password) VALUES (?,?,?,?)`
+
+    db.query(sqlInsertCheck, [username], (err, result) => {
+        if(err) {
+            throw err;
+        }
+        //check if username already exists
+        if(result.length > 0){
+            res.status(401).send(`username "${username}" already taken`)
+        }
+        else {
+            db.query(sqlInsert, [firstName, lastName, username, password], (err, result) => {
+
+                res.status(200).send(`${username} registered successfully`);
+            })
+        }
     })
 });
-
-
-app.get('/', (req, res) => {})
-
-
-
-// root@localhost
-// 3g6lh?Pwwd(z
-
-
 
 // CREATE SCHEMA IF NOT EXISTS `blogdb` 
 

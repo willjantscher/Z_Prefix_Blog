@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Axios from 'axios';
-import { user } from 'pg/lib/defaults';
 
 //npm run start to execute
 //in client, npm install axios
@@ -18,7 +17,7 @@ function App() {
       firstName: firstName, 
       lastName: lastName, 
       username: username, 
-      password: password}).then(() => alert("successful registration"))
+      password: password}).then((res) => console.log(res.data));
   };
 
   return (
