@@ -68,3 +68,14 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+TO Do
+
+add encryption to database storage of credentials salted/hashed
+add react route to create different pages/route between them
+
+
+
+POST MUST INCLUDE TITLE, CONTENT, AND CREATION DATE
+

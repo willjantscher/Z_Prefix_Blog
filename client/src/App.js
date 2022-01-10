@@ -20,6 +20,10 @@ function App() {
       password: password}).then((res) => console.log(res.data));
   };
 
+  const login = () => {
+
+  }
+
   return (
     <div className="App"> 
       <div className="registration">
@@ -52,7 +56,7 @@ function App() {
         <h1>Login</h1>
         <input type="text" placeholder="Username..." />
         <input type="password" placeholder="Password..." />
-        <button> Login </button>
+        <button onClick={login}> Login </button>
       </div>
     </div>
   );

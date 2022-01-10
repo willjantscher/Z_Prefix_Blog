@@ -3,8 +3,8 @@ const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
 const mysql = require("mysql");
-const { password } = require("pg/lib/defaults");
-const { response } = require("express");
+const {encrypt, decrypt} = require("./EncryptionHandler");
+
 const port = 3001;
 
 const db = mysql.createPool({
@@ -24,23 +24,18 @@ app.listen(port, () => {
 //node server.js to run server
 //npm run devStart to use nodemon
 
-
-// app.get('/api/get', (req, res) => {
-//     const sqlSelect = "SELECT * FROM users"
-//     db.query(sqlSelect, (err, res) =>{
-//         res.send(res);
-//     })
-// })
-
 app.post('/api/insert', (req, res) => {
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const username = req.body.username
     const password = req.body.password
 
+    //convert password to identifier and encrypted password
+    const hashedPassword = encrypt(password)
+
     //check if username already exists    
     const sqlInsertCheck = `SELECT id FROM users WHERE username = ?`
-    const sqlInsert = `INSERT INTO users (firstName, lastName, username, password) VALUES (?,?,?,?)`
+    const sqlInsert = `INSERT INTO users (firstName, lastName, username, password, iv) VALUES (?,?,?,?,?)`
 
     db.query(sqlInsertCheck, [username], (err, result) => {
         if(err) {
@@ -51,7 +46,7 @@ app.post('/api/insert', (req, res) => {
             res.status(401).send(`username "${username}" already taken`)
         }
         else {
-            db.query(sqlInsert, [firstName, lastName, username, password], (err, result) => {
+            db.query(sqlInsert, [firstName, lastName, username, hashedPassword.password, hashedPassword.iv], (err, result) => {
 
                 res.status(200).send(`${username} registered successfully`);
             })
