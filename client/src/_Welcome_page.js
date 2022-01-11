@@ -51,6 +51,7 @@ function _Welcome_page() {
 
   const guest = () => {
     setLoginStatus(false);
+    localStorage.setItem("username", "guest") 
     navigate(`/content`);
   }
 
