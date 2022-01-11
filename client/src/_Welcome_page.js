@@ -17,11 +17,14 @@ function _Welcome_page() {
   Axios.defaults.withCredentials = true;
 
   const register = () => {
-    Axios.post(`${port}/api/register`, {
-      firstName: firstName, 
-      lastName: lastName, 
-      username: newUsername, 
-      password: newPassword}).then((res) => console.log(res.data));
+    if(firstName !== "" && lastName !== "" && newUsername !== "" && newPassword !== "")
+    {
+      Axios.post(`${port}/api/register`, {
+        firstName: firstName, 
+        lastName: lastName, 
+        username: newUsername, 
+        password: newPassword}).then((res) => console.log(res.data));
+    }
   };
 
   const login = () => {
