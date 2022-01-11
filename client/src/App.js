@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap-grid.css';
 
+import Navbar from "./_Navbar"
 import WelcomePage from "./_Welcome_page";
 import ContentPage from "./_Content_page";
 import PostCreationPage from "./_Post_creation_page";
@@ -19,7 +20,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* <Navbar /> */}
+        <Navbar />
         <div className="content">
           <Routes>
             <Route path="/" element={<WelcomePage/>}></Route>
