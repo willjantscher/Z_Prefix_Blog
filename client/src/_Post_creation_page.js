@@ -11,14 +11,6 @@ function _Post_creation_page()
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');
 
-    const userAuthenticated = () => {
-        Axios.get(`${port}/isUserAuth`, {headers: {
-        "x-access-token": localStorage.getItem("token"),
-        }}).then((res) => {
-        console.log(res)
-        })
-    }
-
     const makePost = () => {
         // console.log(postTitle + postContent);
         let date = new Date();
@@ -35,8 +27,8 @@ function _Post_creation_page()
         Axios.get(`${port}/isUserAuth`, {headers: {
             "x-access-token": localStorage.getItem("token"),
             }}).then((res) => {
-            console.log(res.data);
-            if (res.data) {
+            // console.log(res.data);
+            if (res.data) { //post to db if user authenticated
                 Axios.post(`${port}/api/post`,body)
             } else {    
                 console.log("user not authorized")
@@ -88,6 +80,12 @@ function _Post_creation_page()
                 </div>
 
                 <div>
+                    <label>Date:
+                        {new Date().toISOString().split('T')[0]}
+                    </label>
+                </div>
+
+                <div>
                     <button className="" value="" onClick={makePost}>Post Stuff</button>
                 </div>
 
@@ -98,11 +96,10 @@ function _Post_creation_page()
 
 export default _Post_creation_page;
 
-
-
-
-
 //USER STORIES
 //As a blogger I want to be able to create a new post so that I can share my insights with the world.
 //A post displays title, content, and creation date.
 //After the post is created, the blogger should be redirected to all of their blog posts.
+
+
+//will want to alert if inputs not filled if time

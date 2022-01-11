@@ -31,6 +31,7 @@ class _Navbar extends Component {
         
     logout = () => {
         localStorage.clear();
+        console.log("logged out")
     }
 
     render() {
@@ -47,8 +48,8 @@ class _Navbar extends Component {
                             </li>
                         )
                     })}
-                    <li key="logout">
-                        <a className="" href="/" onClick={this.logout()}>
+                    <li key="logout" >
+                        <a className="" href="/" onClick={() => {this.logout()}}>
                             Logout
                         </a>
                     </li>
