@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
 
@@ -13,8 +14,8 @@ function _Welcome_page() {
   const [newPassword, setNewPassword] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-
   const [loginStatus, setLoginStatus] = useState(false);
+  const navigate = useNavigate();
 
   Axios.defaults.withCredentials = true;
 
@@ -36,10 +37,15 @@ function _Welcome_page() {
       } else {
         localStorage.setItem("token", res.data.token)
         setLoginStatus(true)  //display username
+        navigate("/myposts");
       }
-      // console.log(res.data[0])
-    
     });
+    
+  }
+
+  const guest = () => {
+    setLoginStatus(false);
+    navigate(`/content`);
   }
 
   //if user is logged in, show userid
@@ -96,6 +102,11 @@ function _Welcome_page() {
           setPassword(e.target.value)
         }}/>
         <button onClick={login}> Login </button>
+      </div>
+
+      <div className='guest'>
+        <h1>Continue as Guest</h1>
+        <button onClick={guest}> Guest </button>
       </div>
 
 
