@@ -1,9 +1,82 @@
-const _Content_page = () => {
-    return(
-        <div className="content_page>">
-            <h2>Here is all of the content</h2>
-        </div>
-    )
+import React, {Component} from "react";
+import Axios from 'axios';
+
+
+class _Content_page extends Component{
+    constructor(props) {
+        super(props);
+        this.state = { 
+            posts: null,
+        }
+    }
+
+    componentDidMount() {
+        const port = "http://localhost:3001"
+        //fetch all posts here
+        Axios.get(`${port}/api/getallposts`).then((res) => {
+            // console.log(res.data);
+            this.setState({ posts: res.data})
+            console.log(this.state.posts)
+        })
+    }
+
+    renderPosts = () => {
+        console.log(this.state.posts)
+        let output = this.state.posts.map(post => {
+            return(
+                <div className="post">
+                    <div>
+                        <label>Title: {post.title}</label>
+                    </div>
+                    <div>
+                        <label>Content: {post.content}</label>
+                    </div>
+                    <div>
+                        <label>DAte: {post.creationDate}</label>
+                    </div>
+                </div>
+            )
+        });
+        return(
+            <div>
+                {output}
+            </div>
+        );
+    }   
+
+
+    render() {
+
+        return(
+            <div className="content_page>">
+                <h2>Here is all of the content</h2>
+
+                {(() => {
+                    switch (this.state.posts) {
+                        case null:
+                            return(
+                                <div>
+                                    {console.log("no posts yet")}
+                                </div>
+                            )
+
+                            // return (
+                            //     <div className="alert-danger text-center">
+                            //         You do not have access to this page!
+                            //     </div>
+                            // );
+                    
+                        default:
+                            return (
+                                <div>
+                                    <this.renderPosts />
+                                </div>
+                            )
+                    }
+                })()}
+            </div>
+        )
+    }
 }
 
 export default _Content_page;
