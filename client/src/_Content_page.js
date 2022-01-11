@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import Axios from 'axios';
-
+import './App.css';
 
 class _Content_page extends Component{
     constructor(props) {
@@ -21,18 +21,18 @@ class _Content_page extends Component{
     }
 
     renderPosts = () => {
-        console.log(this.state.posts)
+        // console.log(this.state.posts)
         let output = this.state.posts.map(post => {
             return(
-                <div className="post">
+                <div className="post" key={post.id}>
                     <div>
                         <label>Title: {post.title}</label>
                     </div>
                     <div>
-                        <label>Content: {post.content}</label>
+                        <textarea defaultValue={post.content}></textarea>
                     </div>
                     <div>
-                        <label>DAte: {post.creationDate}</label>
+                        <label>Date: {post.creationDate}</label>
                     </div>
                 </div>
             )
@@ -56,7 +56,7 @@ class _Content_page extends Component{
                         case null:
                             return(
                                 <div>
-                                    {console.log("no posts yet")}
+                                    {/* {console.log("no posts yet")} */}
                                 </div>
                             )
 

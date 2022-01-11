@@ -2,6 +2,24 @@
   text-align: center;
 }
 
+body {background-color: rgb(29, 28, 77);}
+
+h1 {
+  color: white;
+}
+h2 {
+  color: white;
+}
+a {
+  color: white;
+}
+label {
+  color: white;
+}
+textarea {
+  background-color: rgb(189, 214, 253);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -26,6 +44,12 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.expand {
+  height: 1em;
+  width: 50%;
+  padding: 3px;
 }
 
 @keyframes App-logo-spin {

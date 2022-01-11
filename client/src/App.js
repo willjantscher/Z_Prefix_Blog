@@ -13,6 +13,7 @@ import WelcomePage from "./_Welcome_page";
 import ContentPage from "./_Content_page";
 import PostCreationPage from "./_Post_creation_page";
 import UserPostsPage from "./_User_Posts_page";
+import 'bootstrap/dist/css/bootstrap-grid.css';
 
 
 

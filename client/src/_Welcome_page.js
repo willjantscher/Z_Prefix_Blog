@@ -68,41 +68,24 @@ function _Welcome_page() {
 
   return (
     <div className="App"> 
-      <div className="registration">
-        <h1>Registration</h1>
+      
 
-        <label>First Name</label>
-        <input type="text" name="firstName" onChange={(e) => {
-          setFirstName(e.target.value)
-        }}/>
-
-        <label>Last Name</label>
-        <input type="text" name="lastName" onChange={(e) => {
-          setLastName(e.target.value)
-        }}/>
-
-        <label>Username</label>
-        <input type="text" name="username" onChange={(e) => {
-          setNewUsername(e.target.value)
-        }}/>
-
-        <label>Password</label>
-        <input type="text" name="password" onChange={(e) => {
-          setNewPassword(e.target.value)
-        }}/>
-
-        <button onClick={register}> Register </button>
-      </div>
-
-      <div className="login">
+      <div className="container">
         <h1>Login</h1>
-        <input type="text" placeholder="Username..." onChange={(e) => {
-          setUsername(e.target.value)
-        }}/>
-        <input type="password" placeholder="Password..." onChange={(e) => {
+        <div className='row justify-content-md-center pb-2'>
+          <input type="text" placeholder="Username..." className='col col-lg-2' onChange={(e) => {
+            setUsername(e.target.value)
+          }}/>
+        </div>
+
+        <div className='row justify-content-md-center pb-4'>
+        <input type="password" placeholder="Password..." className='col col-lg-2' onChange={(e) => {
           setPassword(e.target.value)
         }}/>
+        </div>
+
         <button onClick={login}> Login </button>
+
       </div>
 
       <div className='guest'>
@@ -110,7 +93,39 @@ function _Welcome_page() {
         <button onClick={guest}> Guest </button>
       </div>
 
+      <div className="container">
+        <h1>Register</h1>
 
+        <div className='row justify-content-md-center pb-2'>
+          <label className='col col-lg-2'>First Name</label>
+          <input type="text" name="firstName"  className='col col-lg-2' onChange={(e) => {
+            setFirstName(e.target.value)
+          }}/>
+        </div>
+
+        <div className='row justify-content-md-center pb-2'>
+          <label className='col col-lg-2'>Last Name</label>
+          <input type="text" name="lastName" className='col col-lg-2' onChange={(e) => {
+            setLastName(e.target.value)
+          }}/>
+        </div>
+
+        <div className='row justify-content-md-center pb-2'>
+          <label className='col col-lg-2'>Username</label>
+          <input type="text" name="username" className='col col-lg-2' onChange={(e) => {
+            setNewUsername(e.target.value)
+          }}/>
+        </div>
+
+        <div className='row justify-content-md-center pb-4'>
+          <label className='col col-lg-2'>Password</label>
+          <input type="text" name="password" className='col col-lg-2' onChange={(e) => {
+            setNewPassword(e.target.value)
+          }}/>
+        </div>
+        
+        <button className='col col-lg-2' onClick={register}> Register </button>
+      </div>
       
       <h1>{loginStatus}</h1>
 
