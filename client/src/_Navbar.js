@@ -28,6 +28,10 @@ class _Navbar extends Component {
             ]
             }
         }
+        
+    logout = () => {
+        localStorage.clear();
+    }
 
     render() {
         // console.log(this.state.MenuItems)
@@ -43,6 +47,11 @@ class _Navbar extends Component {
                             </li>
                         )
                     })}
+                    <li key="logout">
+                        <a className="" href="/" onClick={this.logout()}>
+                            Logout
+                        </a>
+                    </li>
                 </ul>
             </nav>
         );
