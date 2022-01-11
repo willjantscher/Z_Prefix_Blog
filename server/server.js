@@ -54,28 +54,25 @@ app.post('/api/insert', (req, res) => {
             })
         }
     })
-});
+})
 
 //login user
-app.get('/api/get'), (req, res) => {
-    const username = req.params.username
-    const password = req.params.password
-    console.log(username + password);
-
+app.get('/api/get', (req, res) => {
+    const username = req.query.username
+    const password = req.query.password
     const sqlGet = `SELECT * FROM users WHERE username = ?`
 
     db.query(sqlGet, [username], (err, result) => {
-        console.log('test')
-        console.log(result)
+        // console.log(result)
         
         if(result.length > 0) {
             const user = result;
-            let user_hashedPassword = user.password;
-            let user_iv = user.iv;
-            let user_id = user.id;
+            let encryption = new Object();
+            encryption.password = user[0].password;
+            encryption.iv = user[0].iv;
 
-            if (encrypt(password = user_hashedPassword)) {
-                console.log(`user ${user_id} authenticated`);
+            if (decrypt( encryption ) == password) {
+                console.log(`user ${user[0].username} authenticated`);
                 res.status(200).send(user);
             } else {
                 console.log(`incorrect password`);
@@ -87,7 +84,7 @@ app.get('/api/get'), (req, res) => {
         }
     })
 
-}
+})
 
 
 
