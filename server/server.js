@@ -3,9 +3,12 @@ const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
 const mysql = require("mysql");
-const {encrypt, decrypt} = require("./EncryptionHandler");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
 
 const port = 3001;
+const {encrypt, decrypt} = require("./EncryptionHandler");
+
 
 const db = mysql.createPool({
     host: "localhost",
@@ -14,9 +17,23 @@ const db = mysql.createPool({
     database: "blogDb",
 });
 
-app.use(cors());
+app.use(cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true
+}));
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(session({
+    key: "userId",
+    secret: "asdfjkl2016asdfjkl",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        expires: 60 * 60 * 24,  //expires in 24 hours
+    },
+}))
 
 app.listen(port, () => {
       console.log(`server is running on port ${port}`)
@@ -26,7 +43,7 @@ app.listen(port, () => {
 
 
 //register new user
-app.post('/api/insert', (req, res) => {
+app.post('/api/register', (req, res) => {
     const firstName = req.body.firstName
     const lastName = req.body.lastName
     const username = req.body.username
@@ -56,10 +73,19 @@ app.post('/api/insert', (req, res) => {
     })
 })
 
+//check to see if user already logged in
+app.get(`/api/login`, (req, res) => {
+    if (req.session.user) {
+        res.send({ loggedIn: true, user: req.session.user })
+    } else {
+        res.send({ loggedIn: false })
+    }
+})
+
 //login user
-app.get('/api/get', (req, res) => {
-    const username = req.query.username
-    const password = req.query.password
+app.post('/api/login', (req, res) => {
+    const username = req.body.username
+    const password = req.body.password
     const sqlGet = `SELECT * FROM users WHERE username = ?`
 
     db.query(sqlGet, [username], (err, result) => {
@@ -72,7 +98,13 @@ app.get('/api/get', (req, res) => {
             encryption.iv = user[0].iv;
 
             if (decrypt( encryption ) == password) {
-                console.log(`user ${user[0].username} authenticated`);
+                req.session.user = result
+                console.log(req.session.user)
+
+
+
+
+                // console.log(`user ${user[0].username} authenticated`);
                 res.status(200).send(user);
             } else {
                 console.log(`incorrect password`);

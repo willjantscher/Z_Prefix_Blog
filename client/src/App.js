@@ -14,8 +14,12 @@ function App() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const [loginStatus, setLoginStatus] = useState('');
+
+  Axios.defaults.withCredentials = true;
+
   const register = () => {
-    Axios.post(`${port}/api/insert`, {
+    Axios.post(`${port}/api/register`, {
       firstName: firstName, 
       lastName: lastName, 
       username: newUsername, 
@@ -23,14 +27,28 @@ function App() {
   };
 
   const login = () => {
-    console.log(username);
-    Axios.get(`${port}/api/get`, {
-      params: {
+    Axios.post(`${port}/api/login`, {
         username: username,
-        password: password
+        password: password,
+    }).then((res) => {
+      if(res.data.message) {
+        setLoginStatus(res.data.message)
+      } else {
+        setLoginStatus(res.data[0].username)  //display username
       }
-    }).then((res) => console.log(res.data));
+      // console.log(res.data[0])
+    
+    });
   }
+
+  //if user is logged in, show userid
+  useEffect(() => {
+    Axios.get(`${port}/api/login`).then((res) => {
+      if(res.data.loggedIn == true) {
+        setLoginStatus(res.data.user[0].username);
+      }
+    })
+  },[])
 
   return (
     <div className="App"> 
@@ -70,6 +88,10 @@ function App() {
         }}/>
         <button onClick={login}> Login </button>
       </div>
+
+
+      
+      <h1>{loginStatus}</h1>
     </div>
   );
 }
