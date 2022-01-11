@@ -5,6 +5,7 @@ const app = express();
 const mysql = require("mysql");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
+const jwt = require("jsonwebtoken"); 
 
 const port = 3001;
 const {encrypt, decrypt} = require("./EncryptionHandler");
@@ -41,6 +42,25 @@ app.listen(port, () => {
 //node server.js to run server
 //npm run devStart to use nodemon
 
+//verify user is allowed to make request
+const verifyJWT = (req, res, next) => {
+    console.log("the request headers are: " + req.headers)
+    const token = req.headers["x-access-token"] //pass token in header from front end
+
+    if (!token) {
+        res.send("no token exist")
+    } else {
+        jwt.verify(token, "asdfjklasdfjkllkjfdsa16", (err, decoded) => {
+            if (err) {
+                res.json({ auth: false, message: "authentication failed"})
+            } else {
+                req.userId = decoded.id;    //save token in req
+                next();
+            }
+        });
+    }
+}
+
 
 //register new user
 app.post('/api/register', (req, res) => {
@@ -76,51 +96,49 @@ app.post('/api/register', (req, res) => {
 //check to see if user already logged in
 app.get(`/api/login`, (req, res) => {
     if (req.session.user) {
+        // console.log("user logged in")
         res.send({ loggedIn: true, user: req.session.user })
     } else {
         res.send({ loggedIn: false })
     }
 })
 
+//check to see if user authenticated, apply middleware to verify user has correct web token
+app.get(`/isUserAuth`, verifyJWT, (req, res) => {
+    res.send("User is authenticated")
+})
+
 //login user
 app.post('/api/login', (req, res) => {
     const username = req.body.username
     const password = req.body.password
-    const sqlGet = `SELECT * FROM users WHERE username = ?`
+    // console.log(req.body)
+    const sqlLogin = `SELECT * FROM users WHERE username = ?`
 
-    db.query(sqlGet, [username], (err, result) => {
-        // console.log(result)
+    db.query(sqlLogin, [username], (err, result) => {
         
         if(result.length > 0) {
-            const user = result;
             let encryption = new Object();
-            encryption.password = user[0].password;
-            encryption.iv = user[0].iv;
+            encryption.password = result[0].password;
+            encryption.iv = result[0].iv;
 
             if (decrypt( encryption ) == password) {
+                const id = result[0].id;
+                const token = jwt.sign({id}, "asdfjklasdfjkllkjfdsa16", {
+                    expiresIn: 300, //5 minutes
+                }) //would want .env variable for security
                 req.session.user = result
-                console.log(req.session.user)
-
-
-
-
-                // console.log(`user ${user[0].username} authenticated`);
-                res.status(200).send(user);
+                res.status(200).json({auth: true, token: token, result: result}) //remove password from result when returning
             } else {
                 console.log(`incorrect password`);
-                res.status(401).send(`incorrect password`);
+                res.json({ auth: false, message: "incorrect password" });
             }
         } else {
             console.log(`username ${username} not found`);
-            res.send(`username ${username} not found`)
+            res.json({ auth: false, message: `username ${username} not found`});
         }
     })
-
 })
-
-
-
-
 
 
 
