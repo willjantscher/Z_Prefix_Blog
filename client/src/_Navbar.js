@@ -32,6 +32,7 @@ class _Navbar extends Component {
         
     logout = () => {
         localStorage.clear();
+        sessionStorage.clear();
         console.log("logged out")
     }
 

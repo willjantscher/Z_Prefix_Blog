@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-body {background-color: rgb(29, 28, 77);}
+body {background-color: rgb(18, 22, 29);}
 
 h1 {
   color: white;
@@ -18,6 +18,10 @@ label {
 }
 textarea {
   background-color: rgb(189, 214, 253);
+}
+
+.container {
+  background-color: rgb(58, 71, 92);
 }
 
 .App-logo {

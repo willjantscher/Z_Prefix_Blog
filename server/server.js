@@ -112,12 +112,13 @@ app.get(`/api/login`, (req, res) => {
 app.post('/api/login', (req, res) => {
     const username = req.body.username
     const password = req.body.password
-    // console.log(req.body)
+    console.log(req.body)
     const sqlLogin = `SELECT * FROM users WHERE username = ?`
 
     db.query(sqlLogin, [username], (err, result) => {
         
         if(result.length > 0) {
+            console.log(result)
             let encryption = new Object();
             encryption.password = result[0].password;
             encryption.iv = result[0].iv;

@@ -29,6 +29,7 @@ function _Welcome_page() {
         username: username,
         password: password,
     }).then((res) => {
+      console.log(res.data.auth)
       if(!res.data.auth) {
         setLoginStatus(false)
       } else {
@@ -37,6 +38,8 @@ function _Welcome_page() {
         localStorage.setItem("id", res.data.result[0].id)
         localStorage.setItem("username", res.data.result[0].username) 
         setLoginStatus(true)  //display username
+        setUsername("");
+        setPassword("");
         navigate("/myposts");
       }
     });
@@ -70,7 +73,7 @@ function _Welcome_page() {
     <div className="App"> 
       
 
-      <div className="container">
+      <div className="container pb-2">
         <h1>Login</h1>
         <div className='row justify-content-md-center pb-2'>
           <input type="text" placeholder="Username..." className='col col-lg-2' onChange={(e) => {
@@ -88,12 +91,12 @@ function _Welcome_page() {
 
       </div>
 
-      <div className='guest'>
+      <div className='container pb-2'>
         <h1>Continue as Guest</h1>
         <button onClick={guest}> Guest </button>
       </div>
 
-      <div className="container">
+      <div className="container pb-2">
         <h1>Register</h1>
 
         <div className='row justify-content-md-center pb-2'>
