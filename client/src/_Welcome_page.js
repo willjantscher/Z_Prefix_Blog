@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
 
-//npm run start to execute
-//in client, npm install axios
-
 function _Welcome_page() {
   const port = "http://localhost:3001"
   const [firstName, setFirstName] = useState('');
@@ -35,7 +32,10 @@ function _Welcome_page() {
       if(!res.data.auth) {
         setLoginStatus(false)
       } else {
+        //save token and user id if successful login
         localStorage.setItem("token", res.data.token)
+        localStorage.setItem("id", res.data.result[0].id)
+        localStorage.setItem("username", res.data.result[0].username) 
         setLoginStatus(true)  //display username
         navigate("/myposts");
       }
@@ -57,13 +57,14 @@ function _Welcome_page() {
     })
   },[])
 
-  const userAuthenticated = () => {
-    Axios.get(`${port}/isUserAuth`, {headers: {
-      "x-access-token": localStorage.getItem("token"),
-    }}).then((res) => {
-      console.log(res)
-    })
-  }
+  //how to authenticate user before actions
+  // const userAuthenticated = () => {
+  //   Axios.get(`${port}/isUserAuth`, {headers: {
+  //     "x-access-token": localStorage.getItem("token"),
+  //   }}).then((res) => {
+  //     console.log(res)
+  //   })
+  // }
 
   return (
     <div className="App"> 
@@ -113,9 +114,9 @@ function _Welcome_page() {
       
       <h1>{loginStatus}</h1>
 
-      {loginStatus && (
+      {/* {loginStatus && (
         <button onClick={userAuthenticated}> Check if Authenticated</button>
-      )}
+      )} */}
     </div>
   );
 }

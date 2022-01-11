@@ -52,7 +52,7 @@ const verifyJWT = (req, res, next) => {
     } else {
         jwt.verify(token, "asdfjklasdfjkllkjfdsa16", (err, decoded) => {
             if (err) {
-                res.json({ auth: false, message: "authentication failed"})
+                res.send(false)
             } else {
                 req.userId = decoded.id;    //save token in req
                 next();
@@ -93,6 +93,11 @@ app.post('/api/register', (req, res) => {
     })
 })
 
+//check to see if user authenticated, apply middleware to verify user has correct web token
+app.get(`/isUserAuth`, verifyJWT, (req, res) => {
+    res.send(true)
+})
+
 //check to see if user already logged in
 app.get(`/api/login`, (req, res) => {
     if (req.session.user) {
@@ -101,11 +106,6 @@ app.get(`/api/login`, (req, res) => {
     } else {
         res.send({ loggedIn: false })
     }
-})
-
-//check to see if user authenticated, apply middleware to verify user has correct web token
-app.get(`/isUserAuth`, verifyJWT, (req, res) => {
-    res.send("User is authenticated")
 })
 
 //login user
@@ -140,7 +140,23 @@ app.post('/api/login', (req, res) => {
     })
 })
 
+//make a post to the blog
+app.post('/api/post', (req, res) => {
+    let id = req.body.userId;
+    let title = req.body.title;
+    let content = req.body.content;
+    let date = req.body.date;
 
+    const sqlPost = `INSERT INTO posts (userId, title, content, creationDate) VALUES (?, ?, ?, ?)`;
+
+    db.query(sqlPost, [id, title, content, date], (err, result) => {
+        if(err) {
+            throw err;
+        }
+        //check if username already exists
+        res.status(200).send(`${title} posted`);
+    })
+})
 
 
 

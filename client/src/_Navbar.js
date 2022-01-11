@@ -30,7 +30,7 @@ class _Navbar extends Component {
         }
 
     render() {
-        console.log(this.state.MenuItems)
+        // console.log(this.state.MenuItems)
         return(
             <nav className="NavbarItems">
                 <ul>
