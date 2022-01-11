@@ -1,112 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import Axios from 'axios';
+// import Navbar from './Navbar'
+import React from "react"
+import {
+  BrowserRouter as Router,
+  Navigate,
+  Route,
+  Routes
+} from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap-grid.css';
 
-//npm run start to execute
-//in client, npm install axios
+import WelcomePage from "./_Welcome_page";
+import ContentPage from "./_Content_page";
+import PostCreationPage from "./_Post_creation_page";
+import UserPostsPage from "./_User_Posts_page";
+
+
 
 function App() {
-  const port = "http://localhost:3001"
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [newUsername, setNewUsername] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const [loginStatus, setLoginStatus] = useState(false);
-
-  Axios.defaults.withCredentials = true;
-
-  const register = () => {
-    Axios.post(`${port}/api/register`, {
-      firstName: firstName, 
-      lastName: lastName, 
-      username: newUsername, 
-      password: newPassword}).then((res) => console.log(res.data));
-  };
-
-  const login = () => {
-    Axios.post(`${port}/api/login`, {
-        username: username,
-        password: password,
-    }).then((res) => {
-      if(!res.data.auth) {
-        setLoginStatus(false)
-      } else {
-        localStorage.setItem("token", res.data.token)
-        setLoginStatus(true)  //display username
-      }
-      // console.log(res.data[0])
-    
-    });
-  }
-
-  //if user is logged in, show userid
-  useEffect(() => {
-    Axios.get(`${port}/api/login`).then((res) => {
-      if(res.data.loggedIn) {
-        setLoginStatus(res.data.user[0].username);
-      }
-    })
-  },[])
-
-  const userAuthenticated = () => {
-    Axios.get(`${port}/isUserAuth`, {headers: {
-      "x-access-token": localStorage.getItem("token"),
-    }}).then((res) => {
-      console.log(res)
-    })
-  }
-
   return (
-    <div className="App"> 
-      <div className="registration">
-        <h1>Registration</h1>
-
-        <label>First Name</label>
-        <input type="text" name="firstName" onChange={(e) => {
-          setFirstName(e.target.value)
-        }}/>
-
-        <label>Last Name</label>
-        <input type="text" name="lastName" onChange={(e) => {
-          setLastName(e.target.value)
-        }}/>
-
-        <label>Username</label>
-        <input type="text" name="username" onChange={(e) => {
-          setNewUsername(e.target.value)
-        }}/>
-
-        <label>Password</label>
-        <input type="text" name="password" onChange={(e) => {
-          setNewPassword(e.target.value)
-        }}/>
-
-        <button onClick={register}> Register </button>
+    <Router>
+      <div className="App">
+        {/* <Navbar /> */}
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<WelcomePage/>}></Route>
+            <Route path="/content" element={<ContentPage/>}></Route>
+            <Route path="/newpost" element={<PostCreationPage/>}></Route>
+            <Route path="/myposts" element={<UserPostsPage/>}></Route>
+          </Routes>
+        </div>
       </div>
-
-      <div className="login">
-        <h1>Login</h1>
-        <input type="text" placeholder="Username..." onChange={(e) => {
-          setUsername(e.target.value)
-        }}/>
-        <input type="password" placeholder="Password..." onChange={(e) => {
-          setPassword(e.target.value)
-        }}/>
-        <button onClick={login}> Login </button>
-      </div>
-
-
-      
-      <h1>{loginStatus}</h1>
-
-      {loginStatus && (
-        <button onClick={userAuthenticated}> Check if Authenticated</button>
-      )}
-    </div>
-  );
+    </Router>
+  )
 }
 
 export default App;
