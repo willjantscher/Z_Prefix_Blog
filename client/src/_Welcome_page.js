@@ -29,6 +29,7 @@ function _Welcome_page() {
     }
   };
 
+  //not pretty but it's a quick fix for loging in after register
   const loginRegister = (user = username, pass = password, nav = "/myposts") => {
     let body;
     if(user && pass) {
@@ -127,13 +128,13 @@ function _Welcome_page() {
         }}/>
         </div>
 
-        <button onClick={login}> Login </button>
+        <button style={{cursor: "pointer"}} onClick={login}> Login </button>
 
       </div>
 
       <div className='container pb-2'>
         <h1>Continue as Guest</h1>
-        <button onClick={guest}> Guest </button>
+        <button style={{cursor: "pointer"}} onClick={guest}> Guest (you know you want to register though...)</button>
       </div>
 
       <div className="container pb-2">
@@ -167,7 +168,7 @@ function _Welcome_page() {
           }}/>
         </div>
         
-        <button className='col col-lg-2' onClick={register}> Register </button>
+        <button style={{cursor: "pointer"}} className='col col-lg-2' onClick={register}> Register </button>
       </div>
       
       <h1>{loginStatus}</h1>

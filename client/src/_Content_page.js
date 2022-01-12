@@ -19,7 +19,7 @@ class _Content_page extends Component{
 
         //fetch all posts here
         Axios.get(`${port}/api/getallposts`).then((res) => {
-            this.setState({ posts: res.data})
+            this.setState({ posts: res.data.reverse()})
             // console.log(this.state.posts)
         }).then(
             Axios.get(`${port}/api/getallusers`).then((res) => {          

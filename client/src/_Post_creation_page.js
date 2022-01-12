@@ -23,22 +23,24 @@ function _Post_creation_page()
             date: formatted_date
         }
 
-        //check if user authenticated before posting
-        Axios.get(`${port}/isUserAuth`, {headers: {
-            "x-access-token": localStorage.getItem("token"),
-            }}).then((res) => {
-            // console.log(res.data);
-            if (res.data) { //post to db if user authenticated
-        Axios.post(`${port}/api/post`,body).then(navigate("/myposts"))
-            } else {    
-                console.log("user not authorized")
-            }
-        })
+        if(postTitle !== "" && postContent !== "") {
+            //check if user authenticated before posting
+            Axios.get(`${port}/isUserAuth`, {headers: {
+                "x-access-token": localStorage.getItem("token"),
+                }}).then((res) => {
+                // console.log(res.data);
+                if (res.data) { //post to db if user authenticated
+            Axios.post(`${port}/api/post`,body).then(navigate("/myposts"))
+                } else {    
+                    console.log("user not authorized")
+                }
+            })
+        }
     }
 
     return(
         <div className="post_creation_page>">
-            <h2>Create new product for consumption</h2>
+            <h2>Create New Produce for Consumption</h2>
                 <div className='container'>
                     <div className='row justify-content-md-center pb-2 pt-2'>
                         <label className='col-md-1 pt-2'>Title: </label>
@@ -73,7 +75,7 @@ function _Post_creation_page()
                 </div>
 
                 <div>
-                    <button className="" value="" onClick={makePost}>Post Stuff</button>
+                    <button className="" value="" style={{cursor: "pointer"}} onClick={makePost}>Post This Great Content</button>
                 </div>
 
 
