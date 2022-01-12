@@ -19,6 +19,9 @@ label {
 textarea {
   background-color: rgb(189, 214, 253);
 }
+input {
+  background-color: rgb(189, 214, 253);
+}
 
 .container {
   background-color: rgb(58, 71, 92);

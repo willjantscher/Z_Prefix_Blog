@@ -1,6 +1,7 @@
 import React, {Component, useState, useEffect} from "react";
 import Axios from 'axios';
 import './App.css';
+import TextareaAutosize from 'react-textarea-autosize';
 
 
 class _Content_page extends Component{
@@ -93,7 +94,7 @@ class _Content_page extends Component{
                                 </div>
                             </div>
                             <div className='row pb-4'>
-                                <textarea id={post.id} readOnly={true} value={post.content} onFocus={(e) => {this.expandPost(e)}}></textarea>
+                                <TextareaAutosize id={post.id} readOnly={true} value={post.content} onFocus={(e) => {this.expandPost(e)}}></TextareaAutosize>
                             </div>
                         </div>
                         <div className="row mb-3" key={`${post.id}_space`}></div>

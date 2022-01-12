@@ -34,51 +34,39 @@ function _Post_creation_page()
                 console.log("user not authorized")
             }
         })
-
-
-          //how to authenticate user before actions
-
-
-        //post to the server
-        // Axios.post(`${port}/api/post`, body)
-        
-
-
-
         navigate("/myposts");
     }
 
     return(
         <div className="post_creation_page>">
-            <h2>Here is where you can create posts</h2>
-
-                <div>
-                    <label>Title: 
+            <h2>Create new product for consumption</h2>
+                <div className='container'>
+                    <div className='row justify-content-md-center pb-2 pt-2'>
+                        <label className='col-md-1 pt-2'>Title: </label>
                         <input 
-                            style={{height:'35px', fontSize:'15px', borderRadius:'3px'}}
-                            className=""
-                            id="title"
-                            name="Title"
-                            placeholder="Title"
-                            onChange={(e) => {
-                                setPostTitle(e.target.value)}}
+                                style={{height:'35px', fontSize:'15px', borderRadius:'3px'}}
+                                className='col-md-3'
+                                id="title"
+                                name="Title"
+                                placeholder="Title"
+                                onChange={(e) => {
+                                    setPostTitle(e.target.value)}}
                         ></input>
-                    </label>
+                    </div>
                 </div>
-
-                <div>
-                <label>Post:
-                    <input 
-                            style={{height:'35px', fontSize:'15px', borderRadius:'3px'}}
-                            className=""
+                <div className="row mb-3"></div>
+                <div className='container pt-2'>
+                    <textarea 
+                            style={{height:'250px', fontSize:'15px', borderRadius:'3px'}}
+                            className="col-md-10"
                             id="content"
                             name="Content"
                             placeholder="Content"
                             onChange={(e) => {
-                                setPostContent(e.target.value)}}                        ></input>
-                    </label>
+                                setPostContent(e.target.value)}}                        
+                    ></textarea>
                 </div>
-
+                <div className='container pt-2'></div>
                 <div>
                     <label>Date:
                         {new Date().toISOString().split('T')[0]}
