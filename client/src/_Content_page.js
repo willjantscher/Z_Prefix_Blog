@@ -7,39 +7,87 @@ class _Content_page extends Component{
         super(props);
         this.state = { 
             posts: null,
+            usernames: null,
+            displayedPosts: null
         }
     }
 
     componentDidMount() {
         const port = "http://localhost:3001"
+
         //fetch all posts here
         Axios.get(`${port}/api/getallposts`).then((res) => {
-            // console.log(res.data);
             this.setState({ posts: res.data})
             // console.log(this.state.posts)
-        })
+        }).then(
+            Axios.get(`${port}/api/getallusers`).then((res) => {          
+                this.setState({ usernames: res.data })
+                this.updateDisplayedPosts();
+            })
+        )
+    }
+
+    updateDisplayedPosts = () => {
+        let displayedPosts = [];
+
+        this.state.posts.forEach(post => {
+            let thisPost = {
+                id: "",
+                user: "",
+                title: "",
+                content: "",
+                creationDate: ""                
+            }
+
+            let username = this.state.usernames.find((user) => {
+                return (user.id === post.userId)
+            }).username
+
+            let curtailedContent;
+            if(post.content.length > 100) {
+                curtailedContent = post.content.substring(0,100) + "...";
+            } else {
+                curtailedContent = post.content
+            }
+
+            thisPost.id = post.id;
+            thisPost.user = username;
+            thisPost.title = post.title;
+            thisPost.content = curtailedContent;
+            thisPost.creationDate = post.creationDate;
+
+            displayedPosts.push(thisPost);
+        });
+        this.setState({displayedPosts: displayedPosts})
     }
 
     renderPosts = () => {
         // console.log(this.state.posts)
-        let output = this.state.posts.map(post => {
-            return(
-                <div key={`${post.id}_container`}>
-                    <div className="container" key={post.id}>
-                        <div className='row'>
-                            <label className="col-md" style={{textAlign: "left", fontSize: "24px"}}>Title: {post.title}</label>
-                            <div className="col-md-6"></div>
-                            <label className="col-md pt-2" style={{textAlign: "right"}}>Date: {post.creationDate}</label>
+        let output = ""
+        if (this.state.displayedPosts) {
+            output = this.state.displayedPosts.map(post => {
+                return(
+                    <div key={`${post.id}_container`}>
+                        <div className="container" key={post.id}>
+                            <div className='row'>
+                                <label className="col-md" style={{textAlign: "left", fontSize: "28px"}}>{post.title}</label>
+                                <div className="col-md-6"></div>
+                                <div className="col-md">
+                                    <label className="row">- {post.user}</label>
+                                    <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate}</label>
+                                </div>
+                            </div>
+                            <div className='row pb-4'>
+                                <textarea readOnly={true} defaultValue={post.content}></textarea>
+                            </div>
                         </div>
-                        <div className='row pb-4'>
-                            <textarea defaultValue={post.content}></textarea>
-                        </div>
+                        <div className="row mb-3" key={`${post.id}_space`}></div>
                     </div>
-                    <div className="row mb-3" key={`${post.id}_space`}></div>
-                </div>
+    
+                )
+            });
+        }
 
-            )
-        });
         return(
             <div>
                 {output}

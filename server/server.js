@@ -171,7 +171,17 @@ app.get('/api/getallposts', (req, res) => {
     })
 })
 
+app.get('/api/getallusers', (req, res) => {
+    const sqlGet = `SELECT id, username FROM users`
 
+    db.query(sqlGet, (err, result) => {
+        if(err) {
+            throw err;
+        }
+        //check if username already exists
+        res.json(result);
+    })
+})
 
 
 
