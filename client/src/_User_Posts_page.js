@@ -75,7 +75,6 @@ class _User_Posts_page extends Component{
             )
         }).content;
         let tempDisplayedPosts = this.state.displayedPosts;
-        console.log("expand" + this.state.displayedPosts[0].content)
         let fullTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
 
         if (fullText === e.target.value) {
@@ -95,7 +94,7 @@ class _User_Posts_page extends Component{
             }}).then((res) => {
                 if (res.data) { //pull user's posts if authenticated
                     console.log(`${localStorage.getItem("username")} authorized`)
-                    console.log(e.target.id)
+                    // console.log(e.target.id)
                     Axios.delete(`${port}/api/deletepost`, { data:{ id: e.target.id }})
                     .then((res) => {
                         // console.log(res)
@@ -112,7 +111,7 @@ class _User_Posts_page extends Component{
         let textIndex = this.state.displayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
         let content = this.state.displayedPosts[textIndex].content;
 
-        console.log(content)
+        // console.log(content)
 
         let body = {
             id: e.target.id,
@@ -126,7 +125,7 @@ class _User_Posts_page extends Component{
             // console.log(res.data);
             if (res.data) { //post to db if user authenticated
                 Axios.patch(`${port}/api/updatepost`, body).then((res) => {
-                    console.log(res)
+                    // console.log(res)
                     this.updatePropsFromDb()
                 })
             } else {    

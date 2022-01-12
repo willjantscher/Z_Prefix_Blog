@@ -73,7 +73,7 @@ class _Content_page extends Component{
         let tempDisplayedPosts = this.state.displayedPosts;
         let expandedTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
 
-        if (expandedText === e.target.value) {
+        if (expandedText === e.target.value && expandedText.length > 100) {
             tempDisplayedPosts[expandedTextIndex].content = expandedText.substring(0,100) + "...";
         } else {
             tempDisplayedPosts[expandedTextIndex].content = expandedText;

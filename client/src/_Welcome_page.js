@@ -23,15 +23,17 @@ function _Welcome_page() {
         firstName: firstName, 
         lastName: lastName, 
         username: newUsername, 
-        password: newPassword}).then((res) => console.log(res.data));
-        navigate("/content");
+        password: newPassword}).then((res) => {
+          login(newUsername, newPassword)
+        });
+
     }
   };
 
-  const login = () => {
+  const login = (user = username, pass = password) => {
     Axios.post(`${port}/api/login`, {
-        username: username,
-        password: password,
+        username: user,
+        password: pass,
     }).then((res) => {
       console.log(res.data.auth)
       if(!res.data.auth) {

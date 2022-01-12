@@ -86,7 +86,7 @@ app.post('/api/register', (req, res) => {
         }
         else {
             db.query(sqlInsert, [firstName, lastName, username, hashedPassword.password, hashedPassword.iv], (err, result) => {
-
+                console.log(result)
                 res.status(200).send(`${username} registered successfully`);
             })
         }
