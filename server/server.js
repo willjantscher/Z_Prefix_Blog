@@ -21,9 +21,9 @@ mongoose.connect(process.env.MONGODB_URI || 'http://localhost:8080', {
     useUnifiedToppology: true
 });
 
-//if it is on heroku
+//if it is on heroku, access build here
 if (process.env.NODE_ENV === 'production') {
-
+    app.use(express.static('..client/build'))
 }
 
 
