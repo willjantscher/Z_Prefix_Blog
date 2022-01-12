@@ -41,6 +41,7 @@ class _User_Posts_page extends Component{
     //update property where posts are pulled from when rendering page
     updateDisplayedPosts = () => {
         let displayedPosts = [];
+        console.log("updating displayed posts")
 
         this.state.posts.forEach(post => {
             let thisPost = {
@@ -74,19 +75,17 @@ class _User_Posts_page extends Component{
             )
         }).content;
         let tempDisplayedPosts = this.state.displayedPosts;
+        console.log("expand" + this.state.displayedPosts[0].content)
         let fullTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
 
         if (fullText === e.target.value) {
             // tempDisplayedPosts[fullTextIndex].content = fullText.substring(0,100) + "...";
         } else {
             tempDisplayedPosts[fullTextIndex].content = fullText;
-            e.target.value=fullText
+            e.target.value=fullText //content updating from posts (not displayed) which updates from db directly
         }
         this.setState({displayedPosts: tempDisplayedPosts})
         e.target.style={cursor: "caret"}
-
-
-        
     }
 
     deletePost = (e) => {
@@ -106,12 +105,44 @@ class _User_Posts_page extends Component{
         })
     }
 
-    updatePost = () => {
+    updatePost = (e) => {
         console.log("updating post in db")
+        let date = new Date();
+        let formatted_date = date.toISOString().split('T')[0];
+        let textIndex = this.state.displayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
+        let content = this.state.displayedPosts[textIndex].content;
+
+        console.log(content)
+
+        let body = {
+            id: e.target.id,
+            content: content
+        }
+
+        // check if user authenticated before posting
+        Axios.get(`${port}/isUserAuth`, {headers: {
+            "x-access-token": localStorage.getItem("token"),
+            }}).then((res) => {
+            // console.log(res.data);
+            if (res.data) { //post to db if user authenticated
+                Axios.patch(`${port}/api/updatepost`, body).then((res) => {
+                    console.log(res)
+                    this.updatePropsFromDb()
+                })
+            } else {    
+                console.log("user not authorized")
+            }
+        })
     }
 
-    postChanged = () => {
-        console.log("values changed")
+    postChanged = (e) => {
+        // console.log("values changed")
+        // console.log(e.target.value)
+        let tempDisplayedPosts = this.state.displayedPosts;
+        let textIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
+        tempDisplayedPosts[textIndex].content = e.target.value;
+        this.setState({displayedPosts: tempDisplayedPosts})
+        // console.log("state values" + this.state.displayedPosts[0].content)
     }
 
 
@@ -132,11 +163,11 @@ class _User_Posts_page extends Component{
                                 </div>
                             </div>
                             <div className='row pb-1'>
-                                <TextareaAutosize id={post.id} readOnly={false} defaultValue={post.content} onChange={(e) => {this.postChanged()}} onFocus={(e) => {this.expandPost(e)}} style={{cursor: "pointer"}}></TextareaAutosize>
+                                <TextareaAutosize id={post.id} readOnly={false} defaultValue={post.content} onChange={(e) => {this.postChanged(e)}} onFocus={(e) => {this.expandPost(e)}} style={{cursor: "pointer"}}></TextareaAutosize>
                             </div>
                             <div className="row pb-1">
                                 <div className="col-md-9"></div>
-                                <button className="col-md-2" style={{cursor: "pointer"}} onClick={(e) => {this.updatePost(e)}}>Save Edits</button>
+                                <button id={post.id} className="col-md-2" style={{cursor: "pointer"}} onClick={(e) => {this.updatePost(e)}}>Save Edits</button>
                             </div>
                         </div>
                         <div className="row mb-3" key={`${post.id}_space`}></div>

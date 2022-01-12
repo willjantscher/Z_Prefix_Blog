@@ -20,7 +20,7 @@ const db = mysql.createPool({
 
 app.use(cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST", "DELETE"],
+    methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true
 }));
 app.use(express.json());
@@ -190,14 +190,14 @@ app.post('/api/getuserposts', (req, res) => {
         if(err) {
             throw err;
         }
-        console.log(result)
+        // console.log(result)
         res.json(result);
     })
 })
 
 app.delete('/api/deletepost', (req, res) => {
     const sqlDelete = `DELETE FROM posts WHERE id = ?`
-    console.log(req.body.id)
+    // console.log(req.body.id)
 
     db.query(sqlDelete, [req.body.id],(err, result) => {
         if(err) {
@@ -208,7 +208,17 @@ app.delete('/api/deletepost', (req, res) => {
     })
 })
 
+app.patch('/api/updatepost', (req,res) => {
+    const sqlUpdate = `UPDATE posts SET content = ? WHERE id = ?`
+    // console.log(req.body)
 
+    db.query(sqlUpdate, [req.body.content, req.body.id,],(err, result) => {
+        if(err) {
+            throw err;
+        }
+        res.send(result);
+    })
+})
 
 
 
