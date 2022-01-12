@@ -20,7 +20,7 @@ const db = mysql.createPool({
 
 app.use(cors({
     origin: ["http://localhost:3000"],
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "DELETE"],
     credentials: true
 }));
 app.use(express.json());
@@ -112,7 +112,7 @@ app.get(`/api/login`, (req, res) => {
 app.post('/api/login', (req, res) => {
     const username = req.body.username
     const password = req.body.password
-    console.log(req.body)
+    // console.log(req.body)
     const sqlLogin = `SELECT * FROM users WHERE username = ?`
 
     db.query(sqlLogin, [username], (err, result) => {
@@ -126,7 +126,7 @@ app.post('/api/login', (req, res) => {
             if (decrypt( encryption ) == password) {
                 const id = result[0].id;
                 const token = jwt.sign({id}, "asdfjklasdfjkllkjfdsa16", {
-                    expiresIn: 300, //5 minutes
+                    expiresIn: 60*30, //30 min
                 }) //would want .env variable for security
                 req.session.user = result
                 res.status(200).json({auth: true, token: token, result: result}) //remove password from result when returning
@@ -192,6 +192,19 @@ app.post('/api/getuserposts', (req, res) => {
         }
         console.log(result)
         res.json(result);
+    })
+})
+
+app.delete('/api/deletepost', (req, res) => {
+    const sqlDelete = `DELETE FROM posts WHERE id = ?`
+    console.log(req.body.id)
+
+    db.query(sqlDelete, [req.body.id],(err, result) => {
+        if(err) {
+            throw err;
+        }
+        // console.log("Delete posts" + result)
+        res.send(result);
     })
 })
 

@@ -3,6 +3,7 @@ import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
 
+const port = "http://localhost:3001"
 
 class _User_Posts_page extends Component{
     constructor(props) {
@@ -14,8 +15,6 @@ class _User_Posts_page extends Component{
     }
 
     componentDidMount() {
-        const port = "http://localhost:3001"
-
         Axios.get(`${port}/isUserAuth`, {headers: {
             "x-access-token": localStorage.getItem("token"),
             }}).then((res) => {
@@ -86,6 +85,23 @@ class _User_Posts_page extends Component{
         // e.target.blur();
     }
 
+    deletePost = (e) => {
+        // console.log(e.target.id);
+        Axios.get(`${port}/isUserAuth`, {headers: {
+            "x-access-token": localStorage.getItem("token"),
+            }}).then((res) => {
+                if (res.data) { //pull user's posts if authenticated
+                    console.log(`${localStorage.getItem("username")} authorized`)
+                    console.log(e.target.id)
+                    Axios.delete(`${port}/api/deletepost`, { data:{ id: e.target.id }})
+                    .then((res) => {
+                        console.log(res)
+                    })
+            }
+        })
+    }
+
+
     renderPosts = () => {
         // console.log(this.state.posts)
         let output = ""
@@ -98,6 +114,7 @@ class _User_Posts_page extends Component{
                                 <label className="col-md-6" style={{textAlign: "left", fontSize: "28px"}}>{post.title}</label>
                                 <div className="col-md-3"></div>
                                 <div className="col-md">
+                                    <button id={`${post.id}`} className="row" style={{cursor: "pointer"}} onClick={(e) => {this.deletePost(e)}}>Delete Post</button>
                                     <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate}</label>
                                 </div>
                             </div>
