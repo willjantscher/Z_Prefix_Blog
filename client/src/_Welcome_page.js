@@ -24,17 +24,51 @@ function _Welcome_page() {
         lastName: lastName, 
         username: newUsername, 
         password: newPassword}).then((res) => {
-          login(newUsername, newPassword)
+          loginRegister(newUsername, newPassword, "/content")
         });
-
     }
   };
 
-  const login = (user = username, pass = password) => {
-    Axios.post(`${port}/api/login`, {
+  const loginRegister = (user = username, pass = password, nav = "/myposts") => {
+    let body;
+    if(user && pass) {
+      body = {
         username: user,
         password: pass,
-    }).then((res) => {
+      }
+    }
+    else {
+      body = {
+        username: username,
+        password: password,
+      }
+    }
+    console.log(body)
+    Axios.post(`${port}/api/login`, body).then((res) => {
+      console.log(res.data.auth)
+      if(!res.data.auth) {
+        setLoginStatus(false)
+      } else {
+        //save token and user id if successful login
+        localStorage.setItem("token", res.data.token)
+        localStorage.setItem("id", res.data.result[0].id)
+        localStorage.setItem("username", res.data.result[0].username) 
+        setLoginStatus(true)  //display username
+        setUsername("");
+        setPassword("");
+        navigate(nav);
+      }
+    });
+    
+  }
+
+  const login = () => {
+    let body = {
+      username: username,
+      password: password,
+    }
+
+    Axios.post(`${port}/api/login`, body).then((res) => {
       console.log(res.data.auth)
       if(!res.data.auth) {
         setLoginStatus(false)
@@ -49,7 +83,6 @@ function _Welcome_page() {
         navigate("/myposts");
       }
     });
-    
   }
 
   const guest = () => {
