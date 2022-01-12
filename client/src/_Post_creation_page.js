@@ -29,12 +29,11 @@ function _Post_creation_page()
             }}).then((res) => {
             // console.log(res.data);
             if (res.data) { //post to db if user authenticated
-                Axios.post(`${port}/api/post`,body)
+        Axios.post(`${port}/api/post`,body).then(navigate("/myposts"))
             } else {    
                 console.log("user not authorized")
             }
         })
-        navigate("/myposts");
     }
 
     return(
