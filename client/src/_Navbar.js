@@ -17,12 +17,12 @@ class _Navbar extends Component {
                     cName: "nav-links"
                 },
                 {
-                    title: "MyPosts",
+                    title: "My Posts",
                     url: "/myposts",
                     cName: "nav-links"
                 },
                 {
-                    title: "NewPost",
+                    title: "New Post",
                     url: "newpost",
                     cName: "nav-links"
                 }

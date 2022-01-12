@@ -72,9 +72,14 @@ class _Content_page extends Component{
         }).content;
         let tempDisplayedPosts = this.state.displayedPosts;
         let expandedTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
-        tempDisplayedPosts[expandedTextIndex].content = expandedText;
+
+        if (expandedText === e.target.value) {
+            tempDisplayedPosts[expandedTextIndex].content = expandedText.substring(0,100) + "...";
+        } else {
+            tempDisplayedPosts[expandedTextIndex].content = expandedText;
+        }
         this.setState({displayedPosts: tempDisplayedPosts})
-        console.log(this.state.displayedPosts)
+        e.target.blur();
     }
 
     renderPosts = () => {
@@ -94,7 +99,7 @@ class _Content_page extends Component{
                                 </div>
                             </div>
                             <div className='row pb-4'>
-                                <TextareaAutosize id={post.id} readOnly={true} value={post.content} onFocus={(e) => {this.expandPost(e)}}></TextareaAutosize>
+                                <TextareaAutosize id={post.id} readOnly={true} value={post.content} onFocus={(e) => {this.expandPost(e)}} style={{cursor: "pointer"}}></TextareaAutosize>
                             </div>
                         </div>
                         <div className="row mb-3" key={`${post.id}_space`}></div>
