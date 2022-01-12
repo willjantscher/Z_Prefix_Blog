@@ -91,8 +91,8 @@ class _Content_page extends Component{
                     <div key={`${post.id}_container`}>
                         <div className="container" key={post.id}>
                             <div className='row'>
-                                <label className="col-md" style={{textAlign: "left", fontSize: "28px"}}>{post.title}</label>
-                                <div className="col-md-6"></div>
+                                <label className="col-md-6" style={{textAlign: "left", fontSize: "28px"}}>{post.title}</label>
+                                <div className="col-md-3"></div>
                                 <div className="col-md">
                                     <label className="row">- {post.user}</label>
                                     <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate}</label>

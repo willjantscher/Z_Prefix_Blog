@@ -44,7 +44,7 @@ app.listen(port, () => {
 
 //verify user is allowed to make request
 const verifyJWT = (req, res, next) => {
-    console.log("the request headers are: " + req.headers)
+    // console.log("the request headers are: " + req.headers)
     const token = req.headers["x-access-token"] //pass token in header from front end
 
     if (!token) {
@@ -183,9 +183,17 @@ app.get('/api/getallusers', (req, res) => {
     })
 })
 
+app.post('/api/getuserposts', (req, res) => {
+    const sqlGet = `SELECT * FROM posts WHERE userId = ?`
 
-
-
+    db.query(sqlGet, [req.body.id],(err, result) => {
+        if(err) {
+            throw err;
+        }
+        console.log(result)
+        res.json(result);
+    })
+})
 
 
 

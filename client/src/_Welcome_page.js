@@ -24,6 +24,7 @@ function _Welcome_page() {
         lastName: lastName, 
         username: newUsername, 
         password: newPassword}).then((res) => console.log(res.data));
+        navigate("/content");
     }
   };
 
