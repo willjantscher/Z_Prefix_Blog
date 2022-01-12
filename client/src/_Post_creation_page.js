@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
+const port = "http://localhost:8080"
 
 
 function _Post_creation_page()
 {
-    const port = "http://localhost:3001"
     const navigate = useNavigate();
     const [postTitle, setPostTitle] = useState('');
     const [postContent, setPostContent] = useState('');

@@ -2,8 +2,7 @@ import React, {Component, useState, useEffect} from "react";
 import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
-
-const port = "http://localhost:3001"
+const port = "http://localhost:8080"
 
 class _User_Posts_page extends Component{
     constructor(props) {

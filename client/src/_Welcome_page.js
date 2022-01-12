@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
+const port = "http://localhost:8080"
+
 
 function _Welcome_page() {
-  const port = "http://localhost:3001"
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [newUsername, setNewUsername] = useState('');

@@ -2,6 +2,7 @@ import React, {Component, useState, useEffect} from "react";
 import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
+const port = "http://localhost:8080"
 
 
 class _Content_page extends Component{
@@ -15,8 +16,6 @@ class _Content_page extends Component{
     }
 
     componentDidMount() {
-        const port = "http://localhost:3001"
-
         //fetch all posts here
         Axios.get(`${port}/api/getallposts`).then((res) => {
             this.setState({ posts: res.data.reverse()})

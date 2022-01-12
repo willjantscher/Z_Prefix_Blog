@@ -7,7 +7,11 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken"); 
 
-const port = 3001;
+// port during dev
+// const port = 3001;
+
+// port for deployment
+const PORT = process.env.PORT || 8080;
 const {encrypt, decrypt} = require("./EncryptionHandler");
 
 
@@ -36,8 +40,8 @@ app.use(session({
     },
 }))
 
-app.listen(port, () => {
-      console.log(`server is running on port ${port}`)
+app.listen(PORT, () => {
+      console.log(`server is running on port ${PORT}`)
 });
 //node server.js to run server
 //npm run devStart to use nodemon
