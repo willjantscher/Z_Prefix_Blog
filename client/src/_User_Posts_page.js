@@ -10,7 +10,8 @@ class _User_Posts_page extends Component{
         super(props);
         this.state = { 
             posts: null,
-            displayedPosts: null
+            displayedPosts: null,
+            height: null
         }
     }
 
@@ -67,26 +68,25 @@ class _User_Posts_page extends Component{
     }
 
     expandPost = (e) => {
-        let expandedText = this.state.posts.find((post) => {
+        let fullText = this.state.posts.find((post) => {
             return(
                 parseInt(post.id) === parseInt(e.target.id)
             )
         }).content;
         let tempDisplayedPosts = this.state.displayedPosts;
-        let expandedTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
+        let fullTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
 
-        if (expandedText === e.target.value) {
-            tempDisplayedPosts[expandedTextIndex].content = expandedText.substring(0,100) + "...";
+        if (fullText === e.target.value) {
+            // tempDisplayedPosts[fullTextIndex].content = fullText.substring(0,100) + "...";
         } else {
-            tempDisplayedPosts[expandedTextIndex].content = expandedText;
+            tempDisplayedPosts[fullTextIndex].content = fullText;
+            e.target.value=fullText
         }
         this.setState({displayedPosts: tempDisplayedPosts})
-
-
-        //will need to edit the text here, update e.target.value and 
-        e.target.value=expandedText
         e.target.style={cursor: "caret"}
-        // e.target.blur();
+
+
+        
     }
 
     deletePost = (e) => {
@@ -106,8 +106,12 @@ class _User_Posts_page extends Component{
         })
     }
 
-    editPost = () => {
-        
+    updatePost = () => {
+        console.log("updating post in db")
+    }
+
+    postChanged = () => {
+        console.log("values changed")
     }
 
 
@@ -127,8 +131,12 @@ class _User_Posts_page extends Component{
                                     <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate.substring(0, 10)}</label>
                                 </div>
                             </div>
-                            <div className='row pb-4'>
-                                <TextareaAutosize id={post.id} readOnly={false} defaultValue={post.content} onFocus={(e) => {this.expandPost(e)}} style={{cursor: "pointer"}}></TextareaAutosize>
+                            <div className='row pb-1'>
+                                <TextareaAutosize id={post.id} readOnly={false} defaultValue={post.content} onChange={(e) => {this.postChanged()}} onFocus={(e) => {this.expandPost(e)}} style={{cursor: "pointer"}}></TextareaAutosize>
+                            </div>
+                            <div className="row pb-1">
+                                <div className="col-md-9"></div>
+                                <button className="col-md-2" style={{cursor: "pointer"}} onClick={(e) => {this.updatePost(e)}}>Save Edits</button>
                             </div>
                         </div>
                         <div className="row mb-3" key={`${post.id}_space`}></div>
