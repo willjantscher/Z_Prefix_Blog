@@ -1,6 +1,7 @@
-import React, {Component} from "react";
+import React, {Component, useState, useEffect} from "react";
 import Axios from 'axios';
 import './App.css';
+
 
 class _Content_page extends Component{
     constructor(props) {
@@ -27,6 +28,7 @@ class _Content_page extends Component{
         )
     }
 
+    //update property where posts are pulled from when rendering page
     updateDisplayedPosts = () => {
         let displayedPosts = [];
 
@@ -61,6 +63,19 @@ class _Content_page extends Component{
         this.setState({displayedPosts: displayedPosts})
     }
 
+    expandPost = (e) => {
+        let expandedText = this.state.posts.find((post) => {
+            return(
+                parseInt(post.id) === parseInt(e.target.id)
+            )
+        }).content;
+        let tempDisplayedPosts = this.state.displayedPosts;
+        let expandedTextIndex = tempDisplayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
+        tempDisplayedPosts[expandedTextIndex].content = expandedText;
+        this.setState({displayedPosts: tempDisplayedPosts})
+        console.log(this.state.displayedPosts)
+    }
+
     renderPosts = () => {
         // console.log(this.state.posts)
         let output = ""
@@ -78,7 +93,7 @@ class _Content_page extends Component{
                                 </div>
                             </div>
                             <div className='row pb-4'>
-                                <textarea readOnly={true} defaultValue={post.content}></textarea>
+                                <textarea id={post.id} readOnly={true} value={post.content} onFocus={(e) => {this.expandPost(e)}}></textarea>
                             </div>
                         </div>
                         <div className="row mb-3" key={`${post.id}_space`}></div>
