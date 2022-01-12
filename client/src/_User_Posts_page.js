@@ -15,6 +15,10 @@ class _User_Posts_page extends Component{
     }
 
     componentDidMount() {
+        this.updatePropsFromDb();
+    }
+
+    updatePropsFromDb = () => {
         Axios.get(`${port}/isUserAuth`, {headers: {
             "x-access-token": localStorage.getItem("token"),
             }}).then((res) => {
@@ -96,6 +100,7 @@ class _User_Posts_page extends Component{
                     Axios.delete(`${port}/api/deletepost`, { data:{ id: e.target.id }})
                     .then((res) => {
                         console.log(res)
+                        this.updatePropsFromDb();
                     })
             }
         })
@@ -115,7 +120,7 @@ class _User_Posts_page extends Component{
                                 <div className="col-md-3"></div>
                                 <div className="col-md">
                                     <button id={`${post.id}`} className="row" style={{cursor: "pointer"}} onClick={(e) => {this.deletePost(e)}}>Delete Post</button>
-                                    <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate}</label>
+                                    <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate.substring(0, 10)}</label>
                                 </div>
                             </div>
                             <div className='row pb-4'>

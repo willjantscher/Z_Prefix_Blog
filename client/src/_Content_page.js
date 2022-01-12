@@ -95,7 +95,7 @@ class _Content_page extends Component{
                                 <div className="col-md-3"></div>
                                 <div className="col-md">
                                     <label className="row">- {post.user}</label>
-                                    <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate}</label>
+                                    <label className="row" style={{textAlign: "right"}}>Date: {post.creationDate.substring(0, 10)}</label>
                                 </div>
                             </div>
                             <div className='row pb-4'>
