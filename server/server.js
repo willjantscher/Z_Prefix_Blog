@@ -1,4 +1,5 @@
 const express = require("express")
+const mongoose = require("mongoose")
 const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
@@ -13,6 +14,17 @@ const jwt = require("jsonwebtoken");
 // port for deployment
 const PORT = process.env.PORT || 8080;
 const {encrypt, decrypt} = require("./EncryptionHandler");
+
+//access internet db
+mongoose.connect(process.env.MONGODB_URI || 'http://localhost:8080', {
+    userNewUrlParser: true,
+    useUnifiedToppology: true
+});
+
+//if it is on heroku
+if (process.env.NODE_ENV === 'production') {
+
+}
 
 
 const db = mysql.createPool({
