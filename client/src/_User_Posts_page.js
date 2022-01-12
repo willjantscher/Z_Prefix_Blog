@@ -99,11 +99,15 @@ class _User_Posts_page extends Component{
                     console.log(e.target.id)
                     Axios.delete(`${port}/api/deletepost`, { data:{ id: e.target.id }})
                     .then((res) => {
-                        console.log(res)
+                        // console.log(res)
                         this.updatePropsFromDb();
                     })
             }
         })
+    }
+
+    editPost = () => {
+        
     }
 
 
