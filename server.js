@@ -7,6 +7,9 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken"); 
 require('dotenv').config()
+// "build": "cd ../client && npm run build",
+// "install-client": "cd ../client && npm install",
+// "heroku-postbuild": "npm run install-client && npm run build",
 
 // port during dev
 // const port = 3001;
@@ -37,9 +40,6 @@ const db = mysql.createConnection({
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('..client/build'))
 }
-
-
-
 
 app.use(cors({
     origin: ["http://localhost:3000"],
@@ -83,6 +83,10 @@ const verifyJWT = (req, res, next) => {
         });
     }
 }
+
+app.get('/test', (req, res) => {
+    res.json({ message: "test success"})
+})
 
 
 //register new user
