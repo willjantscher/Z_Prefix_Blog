@@ -1,6 +1,8 @@
 ## My Blog
 
 ### Notes
+The front end is built in react and the backend is an express server with a mySQL database. The client and server have been deployed to Heroku jointly and the installed add-on (ClearDB MySQL) hosts the SQL database. 
+
 This is not a great blog, but it does meet all of the requirements and user stories. If this was an actual project, here are some of the first things I would fix/improve:
 
 1. Do not return hashed pass/iv on login
