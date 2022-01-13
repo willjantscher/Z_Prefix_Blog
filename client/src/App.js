@@ -35,8 +35,8 @@ function App() {
         <div className="pb-5"></div>
         <footer className="footer justify-content-md-center pb-4" style={{position: "fixed", bottom: 0, width: "100%", alignContent: "center"}}>
           <div style={{ color: "grey", textAlign: "center" }}>@ 2022 Ok Devs inc. All Rights Reserved. </div>
-          <div style={{alignContent: "center"}}>
-            <a style={{color:"cyan", textAlign: "center"}}href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=RickRoll">www.SomewhatFunctionalBlogs.org</a>
+          <div style={{textAlign: "center", alignContent: "center"}}>
+            <a style={{color:"cyan", textAlign: "center", alignContent: "center"}}href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=RickRoll">www.SomewhatFunctionalBlogs.org</a>
           </div>
         </footer>
     </body>
