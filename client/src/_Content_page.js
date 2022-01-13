@@ -20,14 +20,15 @@ class _Content_page extends Component{
     componentDidMount() {
         //fetch all posts here
         Axios.post(`${port}/api/getallposts`).then((res) => {
-            console.log(res)
+            // console.log(res)
             this.setState({ posts: res.data.reverse()})
             // console.log(this.state.posts)
         }).then(
             Axios.post(`${port}/api/getallusers`).then((res) => {   
-                console.log('usernames' + res.data)       
-                this.setState({ usernames: res.data })
-                this.updateDisplayedPosts();
+                // console.log('usernames' + res.data)       
+                this.setState({ usernames: res.data }, () => this.updateDisplayedPosts());
+                //problem with async here
+
             })
         )
     }

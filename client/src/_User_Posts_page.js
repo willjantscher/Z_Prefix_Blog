@@ -30,8 +30,8 @@ class _User_Posts_page extends Component{
                     Axios.post(`${port}/api/getuserposts`,{
                         id: localStorage.getItem("id")
                     }).then((res) => {
-                        this.setState({ posts: res.data.reverse()})
-                        this.updateDisplayedPosts();
+                        this.setState({ posts: res.data.reverse()}, () => this.updateDisplayedPosts());                        
+                        //problem with async here
                         // console.log(this.state.posts)
                     })
                 } else {    
