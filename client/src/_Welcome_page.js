@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
 //localhostapi
-// const port = "http://localhost:8080"
-const port = "https://jantscher-z-prefix-blog.herokuapp.com"
+const port = "http://localhost:8080"
+// const port = "https://jantscher-z-prefix-blog.herokuapp.com"
 
 
 function _Welcome_page() {

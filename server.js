@@ -12,7 +12,7 @@ require('dotenv').config()
 // "heroku-postbuild": "npm run install-client && npm run build",
 
 // port during dev
-// const port = 3001;
+// const PORT = 3001;
 //rm -rf .git     
 
 // port for deployment
@@ -21,19 +21,19 @@ const {encrypt, decrypt} = require("./EncryptionHandler");
 
 //access internet db
 //mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true
-const db = mysql.createConnection({
-    host: "us-cdbr-east-05.cleardb.net",
-    user: "b76457c30cc8ea",
-    password: "7dfff6d3",
-    database: "heroku_a4405003a2a182f",
-})
+// const db = mysql.createConnection({
+//     host: "us-cdbr-east-05.cleardb.net",
+//     user: "b76457c30cc8ea",
+//     password: "7dfff6d3",
+//     database: "heroku_a4405003a2a182f",
+// })
 //local db
-// const db = mysql.createPool({
-//     host: "localhost", 
-//     user: "root",
-//     password: "re5202lo",
-//     database: "blogDb",
-// });
+const db = mysql.createPool({
+    host: "localhost", 
+    user: "root",
+    password: "re5202lo",
+    database: "blogDb",
+});
 console.log("server.js called")
 
 
@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(cors({
-    origin: ["*"],
+    origin: ["http://localhost:3000"],
     methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true
 }));
@@ -193,6 +193,7 @@ app.post('/api/post', (req, res) => {
 
 app.get('/api/getallposts', (req, res) => {
     const sqlGet = `SELECT * FROM posts`
+    console.log('getting all posts' + PORT)
 
     db.query(sqlGet, (err, result) => {
         if(err) {
