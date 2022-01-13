@@ -5,7 +5,7 @@ import Axios from 'axios';
 //localhostapi
 // const port = "http://localhost:8080"
 // const port = "https://jantscher-z-prefix-blog.herokuapp.com"
-require('cd ... dotenv').config()
+require('.../dotenv').config()
 const port = process.env.PORT || 8080;
 
 
