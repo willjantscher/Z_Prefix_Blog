@@ -76,7 +76,7 @@ function _Welcome_page() {
 
     Axios.post(`${port}/api/login`, body).then((res) => {
       console.log(res.data.auth)
-      console.log(res.message)
+      console.log(res.data.message)
       if(!res.data.auth) {
         setLoginStatus(false)
       } else {
