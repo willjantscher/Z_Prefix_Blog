@@ -32,7 +32,8 @@ function App() {
             </div>
           </div>
         </Router>
-        <footer className="footer">
+        <div className="pb-5"></div>
+        <footer className="footer justify-content-md-center pb-4" style={{position: "fixed", bottom: 0, width: 100}}>
           <div>@ 2022 Ok Devs inc. All Rights Reserved. </div>
           <div>
             <a style={{color:"cyan"}}href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=RickRoll">www.SomewhatFunctionalBlogs.org</a>
