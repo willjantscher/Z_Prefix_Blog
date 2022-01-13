@@ -30,9 +30,10 @@ class _User_Posts_page extends Component{
                     Axios.post(`${port}/api/getuserposts`,{
                         id: localStorage.getItem("id")
                     }).then((res) => {
-                        this.setState({ posts: res.data.reverse()}, () => this.updateDisplayedPosts());                        
-                        //problem with async here
+                        this.setState({ posts: res.data.reverse()})
+                    }).then((res) => {
                         // console.log(this.state.posts)
+                        this.updateDisplayedPosts();
                     })
                 } else {    
                     console.log("user not authorized")
