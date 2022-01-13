@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
+const session = require("cookie-session");
 const jwt = require("jsonwebtoken"); 
 require('dotenv').config()
 // "build": "cd ../client && npm run build",
