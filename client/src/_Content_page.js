@@ -20,12 +20,12 @@ class _Content_page extends Component{
     componentDidMount() {
         //fetch all posts here
         Axios.get(`${port}/api/getallposts`).then((res) => {
-            console.log(res.data)
+            console.log(res)
             this.setState({ posts: res.data.reverse()})
             // console.log(this.state.posts)
         }).then(
             Axios.get(`${port}/api/getallusers`).then((res) => {   
-                console.log('usernames' + res)       
+                console.log('usernames' + res.data)       
                 this.setState({ usernames: res.data })
                 this.updateDisplayedPosts();
             })
