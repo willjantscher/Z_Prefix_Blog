@@ -42,7 +42,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
     const path = require('path');
     app.get('*', (req, res) => {
-      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+      req.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
 //http://localhost:3000
@@ -64,7 +64,8 @@ app.use(session({
     },
 }))
 
-app.listen(PORT, () => {
+app.listen(PORT, (err) => {
+    if(err) {return console.log(err)}
       console.log(`server is running on port ${PORT}`)
 });
 //node server.js to run server
