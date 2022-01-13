@@ -229,7 +229,8 @@ app.post('/api/getuserposts', (req, res) => {
             throw err;
         }
         // console.log(result)
-        res.json(result);
+        // res.json(result);
+        res.send('here is the body' + result)
     })
 })
 
