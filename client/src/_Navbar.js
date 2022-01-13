@@ -47,7 +47,7 @@ class _Navbar extends Component {
         // console.log(this.state.MenuItems)
         return(
             <nav className="NavbarItems">
-                <div className="row">
+                {/* <div className="row">
                     {this.state.MenuItems.map((item, index) => {
                         return(
                             <div key={index} className="col-sm">
@@ -62,7 +62,29 @@ class _Navbar extends Component {
                             Logout
                         </a>
                     </div>
-                </div>
+                </div> */}
+                {(() => {
+                    switch (localStorage.getItem("username")) {
+                        case null:
+                            return(
+                                <div>
+                                    No one logged in
+                                </div>
+                            )
+                        case "guest":
+                            return(
+                                <div>
+                                    Guest logged in
+                                </div>
+                            )
+                        default:
+                            return (
+                                <div>
+                                    registered user logged in
+                                </div>
+                            )
+                    }
+                })()}
             </nav>
         );
     }
