@@ -21,7 +21,7 @@ const {encrypt, decrypt} = require("./EncryptionHandler");
 
 //access internet db
 //mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true
-const db = mysql.createConnection({
+const pool = mysql.createPool({
     host: "us-cdbr-east-05.cleardb.net",
     user: "b76457c30cc8ea",
     password: "7dfff6d3",
@@ -111,7 +111,7 @@ app.post('/api/register', (req, res) => {
     const sqlInsertCheck = `SELECT id FROM users WHERE username = ?`
     const sqlInsert = `INSERT INTO users (firstName, lastName, username, password, iv) VALUES (?,?,?,?,?)`
 
-    db.query(sqlInsertCheck, [username], (err, result) => {
+    pool.query(sqlInsertCheck, [username], (err, result) => {
         if(err) {
             throw err;
         }
@@ -120,7 +120,7 @@ app.post('/api/register', (req, res) => {
             res.status(401).send(`username "${username}" already taken`)
         }
         else {
-            db.query(sqlInsert, [firstName, lastName, username, hashedPassword.password, hashedPassword.iv], (err, result) => {
+            pool.query(sqlInsert, [firstName, lastName, username, hashedPassword.password, hashedPassword.iv], (err, result) => {
                 if(err) {
                     throw err;
                 }
@@ -153,7 +153,7 @@ app.post('/api/login', (req, res) => {
     console.log(req.body)
     const sqlLogin = `SELECT * FROM users WHERE username = ?`
 
-    db.query(sqlLogin, [username], (err, result) => {
+    pool.query(sqlLogin, [username], (err, result) => {
         
         if(result.length > 0) {
             console.log(result)
@@ -188,7 +188,7 @@ app.post('/api/post', (req, res) => {
 
     const sqlPost = `INSERT INTO posts (userId, title, content, creationDate) VALUES (?, ?, ?, ?)`;
 
-    db.query(sqlPost, [id, title, content, date], (err, result) => {
+    pool.query(sqlPost, [id, title, content, date], (err, result) => {
         if(err) {
             throw err;
         }
@@ -200,7 +200,7 @@ app.post('/api/post', (req, res) => {
 app.post('/api/getallposts', (req, res) => {
     const sqlGet = `SELECT * FROM posts`
 
-    db.query(sqlGet, (err, result) => {
+    pool.query(sqlGet, (err, result) => {
         if(err) {
             throw err;
         }
@@ -212,7 +212,7 @@ app.post('/api/getallposts', (req, res) => {
 app.post('/api/getallusers', (req, res) => {
     const sqlGet = `SELECT id, username FROM users`
 
-    db.query(sqlGet, (err, result) => {
+    pool.query(sqlGet, (err, result) => {
         if(err) {
             throw err;
         }
@@ -224,7 +224,7 @@ app.post('/api/getallusers', (req, res) => {
 app.post('/api/getuserposts', (req, res) => {
     const sqlGet = `SELECT * FROM posts WHERE userId = ?`
 
-    db.query(sqlGet, [req.body.id],(err, result) => {
+    pool.query(sqlGet, [req.body.id],(err, result) => {
         if(err) {
             throw err;
         }
@@ -237,7 +237,7 @@ app.delete('/api/deletepost', (req, res) => {
     const sqlDelete = `DELETE FROM posts WHERE id = ?`
     // console.log(req.body.id)
 
-    db.query(sqlDelete, [req.body.id],(err, result) => {
+    pool.query(sqlDelete, [req.body.id],(err, result) => {
         if(err) {
             throw err;
         }
@@ -250,7 +250,7 @@ app.patch('/api/updatepost', (req,res) => {
     const sqlUpdate = `UPDATE posts SET content = ? WHERE id = ?`
     // console.log(req.body)
 
-    db.query(sqlUpdate, [req.body.content, req.body.id,],(err, result) => {
+    pool.query(sqlUpdate, [req.body.content, req.body.id,],(err, result) => {
         if(err) {
             throw err;
         }
