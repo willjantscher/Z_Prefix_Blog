@@ -97,6 +97,8 @@ function _Welcome_page() {
 
   const guest = () => {
     setLoginStatus(false);
+    localStorage.clear();
+    sessionStorage.clear();
     localStorage.setItem("username", "guest") 
     navigate(`/content`);
   }
