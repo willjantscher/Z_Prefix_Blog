@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
 //localhostapi
-const port = "http://localhost:8080"
+// const port = "http://localhost:8080"
 // const port = "https://jantscher-z-prefix-blog.herokuapp.com"
+require('cd ... dotenv').config()
+const port = process.env.PORT || 8080;
 
 
 function _Welcome_page() {

@@ -2,9 +2,10 @@ import React, {Component} from "react";
 import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
-const port = "http://localhost:8080"
+// const port = "http://localhost:8080"
 // const port = "https://jantscher-z-prefix-blog.herokuapp.com";
-
+require('cd ... dotenv').config()
+const port = process.env.PORT || 8080;
 
 class _Content_page extends Component{
     constructor(props) {
