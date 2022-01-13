@@ -34,6 +34,7 @@ const db = mysql.createConnection({
 //     password: "re5202lo",
 //     database: "blogDb",
 // });
+console.log("server.js called")
 
 
 //if it is on heroku, access build here
@@ -46,7 +47,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["*"],
     methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true
 }));
