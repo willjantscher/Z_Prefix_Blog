@@ -10,6 +10,7 @@ require('dotenv').config()
 
 // port during dev
 // const port = 3001;
+//rm -rf .git     
 
 // port for deployment
 const PORT = process.env.PORT || 8080;
