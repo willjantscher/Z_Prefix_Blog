@@ -32,7 +32,6 @@ function App() {
             </div>
           </div>
         </Router>
-        <div className="pb-5"></div>
         <footer className="footer justify-content-md-center pb-4" style={{position: "fixed", bottom: 0, width: "100%", alignContent: "center"}}>
           <div style={{ color: "grey", textAlign: "center" }}>@ 2022 Ok Devs inc. All Rights Reserved. </div>
           <div style={{textAlign: "center", alignContent: "center"}}>
