@@ -22,7 +22,7 @@ function _Welcome_page() {
   Axios.defaults.withCredentials = true;
 
   const register = () => {
-    //also bad if statement, should be handled on backend but I'm lazy
+    //also bad if statement, should be handled on backend or on input forms but I'm lazy
     if(firstName !== "" && lastName !== "" && newUsername !== "" && newPassword !== "" && firstName.length < 255 && lastName.length < 255 && newUsername.length < 255 && newPassword.length < 255)
     {
       Axios.post(`${port}/api/register`, {
@@ -70,27 +70,29 @@ function _Welcome_page() {
   }
 
   const login = () => {
-    let body = {
-      username: username,
-      password: password,
-    }
-
-    Axios.post(`${port}/api/login`, body).then((res) => {
-      console.log(res.data.auth)
-      console.log(res.data.message)
-      if(!res.data.auth) {
-        setLoginStatus(false)
-      } else {
-        //save token and user id if successful login
-        localStorage.setItem("token", res.data.token)
-        localStorage.setItem("id", res.data.result[0].id)
-        localStorage.setItem("username", res.data.result[0].username) 
-        setLoginStatus(true)  //display username
-        setUsername("");
-        setPassword("");
-        navigate("/myposts");
+    if (username !== null && password !== null && username.length < 255 && password.length < 255) {
+      let body = {
+        username: username,
+        password: password,
       }
-    });
+  
+      Axios.post(`${port}/api/login`, body).then((res) => {
+        console.log(res.data.auth)
+        console.log(res.data.message)
+        if(!res.data.auth) {
+          setLoginStatus(false)
+        } else {
+          //save token and user id if successful login
+          localStorage.setItem("token", res.data.token)
+          localStorage.setItem("id", res.data.result[0].id)
+          localStorage.setItem("username", res.data.result[0].username) 
+          setLoginStatus(true)  //display username
+          setUsername("");
+          setPassword("");
+          navigate("/myposts");
+        }
+      });
+    }; 
   }
 
   const guest = () => {
