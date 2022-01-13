@@ -197,7 +197,7 @@ app.post('/api/post', (req, res) => {
     })
 })
 
-app.get('/api/getallposts', (req, res) => {
+app.post('/api/getallposts', (req, res) => {
     const sqlGet = `SELECT * FROM posts`
 
     db.query(sqlGet, (err, result) => {
@@ -209,7 +209,7 @@ app.get('/api/getallposts', (req, res) => {
     })
 })
 
-app.get('/api/getallusers', (req, res) => {
+app.post('/api/getallusers', (req, res) => {
     const sqlGet = `SELECT id, username FROM users`
 
     db.query(sqlGet, (err, result) => {
