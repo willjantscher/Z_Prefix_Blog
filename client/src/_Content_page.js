@@ -21,53 +21,53 @@ class _Content_page extends Component{
         //fetch all posts here
         Axios.post(`${port}/api/getallposts`).then((res) => {
             // console.log(res)
-            this.setState({ posts: res.data.reverse()})
+            this.setState({ posts: res.data.reverse()}, () => this.updateDisplayedPosts())
             // console.log(this.state.posts)
         }).then(
             Axios.post(`${port}/api/getallusers`).then((res) => {   
                 // console.log('usernames' + res.data)       
-                this.setState({ usernames: res.data });
+                this.setState({ usernames: res.data }, () => this.updateDisplayedPosts());
                 //problem with async here
-            }).then((res) => {
-                console.log(this.state.posts)
-                this.updateDisplayedPosts();
             })
         )
     }
 
     //update property where posts are pulled from when rendering page
     updateDisplayedPosts = () => {
-        let displayedPosts = [];
+        console.log("update displayed posts called")
+        if(this.state.usernames !== null && this.state.posts !== null) {
+            let displayedPosts = [];
 
-        this.state.posts.forEach(post => {
-            let thisPost = {
-                id: "",
-                user: "",
-                title: "",
-                content: "",
-                creationDate: ""                
-            }
-
-            let username = this.state.usernames.find((user) => {
-                return (user.id === post.userId)
-            }).username
-
-            let curtailedContent;
-            if(post.content.length > 100) {
-                curtailedContent = post.content.substring(0,100) + "...";
-            } else {
-                curtailedContent = post.content
-            }
-
-            thisPost.id = post.id;
-            thisPost.user = username;
-            thisPost.title = post.title;
-            thisPost.content = curtailedContent;
-            thisPost.creationDate = post.creationDate;
-
-            displayedPosts.push(thisPost);
-        });
-        this.setState({displayedPosts: displayedPosts})
+            this.state.posts.forEach(post => {
+                let thisPost = {
+                    id: "",
+                    user: "",
+                    title: "",
+                    content: "",
+                    creationDate: ""                
+                }
+    
+                let username = this.state.usernames.find((user) => {
+                    return (user.id === post.userId)
+                }).username
+    
+                let curtailedContent;
+                if(post.content.length > 100) {
+                    curtailedContent = post.content.substring(0,100) + "...";
+                } else {
+                    curtailedContent = post.content
+                }
+    
+                thisPost.id = post.id;
+                thisPost.user = username;
+                thisPost.title = post.title;
+                thisPost.content = curtailedContent;
+                thisPost.creationDate = post.creationDate;
+    
+                displayedPosts.push(thisPost);
+            });
+            this.setState({displayedPosts: displayedPosts})
+        }
     }
 
     expandPost = (e) => {
