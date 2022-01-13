@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
 const cookieParser = require("cookie-parser");
-const session = require("cookie-session");
+const session = require("express-session");
 const jwt = require("jsonwebtoken"); 
 require('dotenv').config()
 // "build": "cd ../client && npm run build",
@@ -21,20 +21,20 @@ const {encrypt, decrypt} = require("./EncryptionHandler");
 
 //access internet db
 //mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true
-// const db = mysql.createConnection({
-//     host: "us-cdbr-east-05.cleardb.net",
-//     user: "b76457c30cc8ea",
-//     password: "7dfff6d3",
-//     database: "heroku_a4405003a2a182f",
-// })
+const db = mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+    user: "b76457c30cc8ea",
+    password: "7dfff6d3",
+    database: "heroku_a4405003a2a182f",
+})
 //local db
-const db = mysql.createPool({
-    host: "localhost", 
-    user: "root",
-    password: "re5202lo",
-    database: "blogDb",
-});
-console.log("server.js called")
+// const db = mysql.createPool({
+//     host: "localhost", 
+//     user: "root",
+//     password: "re5202lo",
+//     database: "blogDb",
+// });
+// console.log("server.js called")
 
 
 //if it is on heroku, access build here
@@ -118,7 +118,10 @@ app.post('/api/register', (req, res) => {
         }
         else {
             db.query(sqlInsert, [firstName, lastName, username, hashedPassword.password, hashedPassword.iv], (err, result) => {
-                console.log(result)
+                if(err) {
+                    throw err;
+                }
+                // console.log(result)
                 res.status(200).send(`${username} registered successfully`);
             })
         }
@@ -144,7 +147,7 @@ app.get(`/api/login`, (req, res) => {
 app.post('/api/login', (req, res) => {
     const username = req.body.username
     const password = req.body.password
-    // console.log(req.body)
+    console.log(req.body)
     const sqlLogin = `SELECT * FROM users WHERE username = ?`
 
     db.query(sqlLogin, [username], (err, result) => {
@@ -193,7 +196,6 @@ app.post('/api/post', (req, res) => {
 
 app.get('/api/getallposts', (req, res) => {
     const sqlGet = `SELECT * FROM posts`
-    console.log('getting all posts' + PORT)
 
     db.query(sqlGet, (err, result) => {
         if(err) {
