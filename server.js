@@ -45,9 +45,9 @@ if (process.env.NODE_ENV === 'production') {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
 }
-
+//http://localhost:3000
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://jantscher-z-prefix-blog.herokuapp.com"],
     methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true
 }));
