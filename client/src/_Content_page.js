@@ -24,7 +24,8 @@ class _Content_page extends Component{
             this.setState({ posts: res.data.reverse()})
             // console.log(this.state.posts)
         }).then(
-            Axios.get(`${port}/api/getallusers`).then((res) => {          
+            Axios.get(`${port}/api/getallusers`).then((res) => {   
+                console.log('usernames' + res.data)       
                 this.setState({ usernames: res.data })
                 this.updateDisplayedPosts();
             })

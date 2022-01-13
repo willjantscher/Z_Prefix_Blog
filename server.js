@@ -46,8 +46,10 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 //http://localhost:3000
+
+const whitelist = ['http://localhost:3000', 'http://localhost:8080', 'https://jantscher-z-prefix-blog.herokuapp.com'];
 app.use(cors({
-    origin: "*",
+    origin: whitelist,
     methods: ["GET", "POST", "DELETE", "PATCH"],
     credentials: true
 }));
