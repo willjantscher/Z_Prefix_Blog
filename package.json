@@ -7,9 +7,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "client && npm run build",
+    "build": "cd client && npm run build",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "start": "node index.js",
+    "start": "cd client && node index.js",
     "devStart": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
