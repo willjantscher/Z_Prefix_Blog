@@ -1,8 +1,9 @@
-import React, {Component, useState, useEffect} from "react";
+import React, {Component} from "react";
 import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
-const port = "http://localhost:8080"
+// const port = "http://localhost:8080"
+const port = "https://jantscher-z-prefix-blog.herokuapp.com";
 
 
 class _Content_page extends Component{

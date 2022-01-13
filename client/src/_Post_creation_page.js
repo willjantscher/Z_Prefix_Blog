@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Axios from 'axios';
 
-const port = "http://localhost:8080"
+// const port = "http://localhost:8080"
+const port = "https://jantscher-z-prefix-blog.herokuapp.com"
 
 
 function _Post_creation_page()

@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 8080;
 const {encrypt, decrypt} = require("./EncryptionHandler");
 
 //access internet db
+//mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true
 const db = mysql.createConnection({
     host: "us-cdbr-east-05.cleardb.net",
     user: "b76457c30cc8ea",
@@ -24,18 +25,12 @@ const db = mysql.createConnection({
 })
 //local db
 // const db = mysql.createPool({
-//     host: "localhost",
+//     host: "localhost", 
 //     user: "root",
 //     password: "re5202lo",
 //     database: "blogDb",
 // });
 
-
-// mongoose.connect(process.env.MONGO_URI || 'http://localhost:8080', {
-//     userNewUrlParser: true,
-//     useUnifiedToppology: true
-// }).then(console.log('db connected'))
-// .catch(err => console.error(err));
 
 //if it is on heroku, access build here
 if (process.env.NODE_ENV === 'production') {

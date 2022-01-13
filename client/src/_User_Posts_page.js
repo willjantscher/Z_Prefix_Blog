@@ -1,8 +1,9 @@
-import React, {Component, useState, useEffect} from "react";
+import React, {Component} from "react";
 import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
-const port = "http://localhost:8080"
+// const port = "http://localhost:8080"
+const port = "https://jantscher-z-prefix-blog.herokuapp.com"
 
 class _User_Posts_page extends Component{
     constructor(props) {
@@ -105,8 +106,6 @@ class _User_Posts_page extends Component{
 
     updatePost = (e) => {
         console.log("updating post in db")
-        let date = new Date();
-        let formatted_date = date.toISOString().split('T')[0];
         let textIndex = this.state.displayedPosts.findIndex((post) => parseInt(post.id) === parseInt(e.target.id))
         let content = this.state.displayedPosts[textIndex].content;
 

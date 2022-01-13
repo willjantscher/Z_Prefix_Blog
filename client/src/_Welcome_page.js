@@ -2,7 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './App.css';
 import Axios from 'axios';
-const port = "http://localhost:8080"
+//localhostapi
+// const port = "http://localhost:8080"
+const port = "https://jantscher-z-prefix-blog.herokuapp.com"
 
 
 function _Welcome_page() {
