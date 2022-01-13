@@ -3,9 +3,9 @@ import Axios from 'axios';
 import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
 // const port = "http://localhost:8080"
-// const port = "https://jantscher-z-prefix-blog.herokuapp.com"
+const port = "https://jantscher-z-prefix-blog.herokuapp.com"
 // require('dotenv').config()
-const port = "mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true" || 8080;
+// const port = "mysql://b76457c30cc8ea:7dfff6d3@us-cdbr-east-05.cleardb.net/heroku_a4405003a2a182f?reconnect=true" || 8080;
 
 class _User_Posts_page extends Component{
     constructor(props) {
