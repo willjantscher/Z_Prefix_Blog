@@ -39,6 +39,10 @@ const db = mysql.createConnection({
 //if it is on heroku, access build here
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'))
+    const path = require('path');
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
 }
 
 app.use(cors({
