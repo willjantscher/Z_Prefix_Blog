@@ -5,7 +5,7 @@ The front end is built in react and the backend is an express server with a mySQ
 
 This is not a great blog, but it does meet all of the requirements and user stories. If this was an actual project, here are some of the first things I would fix/improve:
 
-1. Do not return hashed pass/iv on login
+1. Do not return hashed pass/iv on successful login request
 2. Dynamically udpate the nav bar based on who is logged in (or if no one is logged in)
 3. Fix post editing so it does not collapse after exiting the editing view and before saving the edit
 4. Clean up code, i.e. refactor
