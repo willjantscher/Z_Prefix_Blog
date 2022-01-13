@@ -167,7 +167,7 @@ app.post('/api/login', (req, res) => {
                     expiresIn: 60*30, //30 min
                 }) //would want .env variable for security
                 req.session.user = result
-                res.status(200).json({auth: true, token: token, result: result}) //remove password from result when returning
+                res.status(200).json({auth: true, token: token, result: result, message: `username ${username} logged in`}) //remove password from result when returning for better security (although hashed)
             } else {
                 console.log(`incorrect password`);
                 res.json({ auth: false, message: "incorrect password" });
