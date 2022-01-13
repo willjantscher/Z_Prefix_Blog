@@ -27,7 +27,7 @@ class _User_Posts_page extends Component{
             }}).then((res) => {
                 if (res.data) { //pull user's posts if authenticated
                     console.log(`${localStorage.getItem("username")} authorized`)
-                    Axios.post(`${port}/api/getallposts`,{
+                    Axios.get(`${port}/api/getallposts`,{
                         id: localStorage.getItem("id")
                     }).then((res) => {
                         this.setState({ posts: res.data.reverse()})
