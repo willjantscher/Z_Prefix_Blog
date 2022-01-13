@@ -10,7 +10,8 @@ This is not a great blog, but it does meet all of the requirements and user stor
 3. Fix post editing so it does not collapse after exiting the editing view and before saving the edit
 4. Clean up code, i.e. refactor
     - there are a lot of places where code can be combined and processes can be improved/optimized 
-5. Improve the styling and UI
+5. Remove unused packages and files from project
+6. Improve the styling and UI
 
 ### Project Requirements
 - Your application must be deployed and accessible to the public internet

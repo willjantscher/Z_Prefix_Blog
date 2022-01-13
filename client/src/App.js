@@ -18,19 +18,28 @@ import 'bootstrap/dist/css/bootstrap-grid.css';
 
 function App() {
   return (
-    <Router>
-      <div className="App">
-        <Navbar />
-        <div className="content">
-          <Routes>
-            <Route path="/" element={<WelcomePage/>}></Route>
-            <Route path="/content" element={<ContentPage/>}></Route>
-            <Route path="/newpost" element={<PostCreationPage/>}></Route>
-            <Route path="/myposts" element={<UserPostsPage/>}></Route>
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <body>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <div className="content">
+              <Routes>
+                <Route path="/" element={<WelcomePage/>}></Route>
+                <Route path="/content" element={<ContentPage/>}></Route>
+                <Route path="/newpost" element={<PostCreationPage/>}></Route>
+                <Route path="/myposts" element={<UserPostsPage/>}></Route>
+              </Routes>
+            </div>
+          </div>
+        </Router>
+        <footer className="footer">
+          <div>@ 2022 Ok Devs inc. All Rights Reserved. </div>
+          <div>
+            <a style={{color:"cyan"}}href="https://www.youtube.com/watch?v=xvFZjo5PgG0&ab_channel=RickRoll">www.SomewhatFunctionalBlogs.org</a>
+          </div>
+        </footer>
+    </body>
+
   )
 }
 
