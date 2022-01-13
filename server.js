@@ -246,26 +246,3 @@ app.patch('/api/updatepost', (req,res) => {
         res.send(result);
     })
 })
-
-
-
-
-
-// CREATE SCHEMA IF NOT EXISTS `blogdb` 
-
-// CREATE TABLE IF NOT EXISTS `new_schema1`.`Posts` (
-//     `id` INT NOT NULL AUTO_INCREMENT,
-//     `userId` INT NULL,
-//     `title` VARCHAR(100) NULL,
-//     `content` VARCHAR(10000) NULL,
-//     PRIMARY KEY (`id`))
-//   ENGINE = InnoDB
-
-// CREATE TABLE IF NOT EXISTS `new_schema1`.`Users` (
-//     `id` INT NOT NULL AUTO_INCREMENT,
-//     `firstName` VARCHAR(45) NOT NULL,
-//     `lastName` VARCHAR(45) NOT NULL,
-//     `username` VARCHAR(45) NOT NULL,
-//     `password` VARCHAR(45) NOT NULL,
-//     PRIMARY KEY (`id`))
-//   ENGINE = InnoDB
