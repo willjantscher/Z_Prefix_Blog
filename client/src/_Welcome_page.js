@@ -22,7 +22,8 @@ function _Welcome_page() {
   Axios.defaults.withCredentials = true;
 
   const register = () => {
-    if(firstName !== "" && lastName !== "" && newUsername !== "" && newPassword !== "")
+    //also bad if statement, should be handled on backend but I'm lazy
+    if(firstName !== "" && lastName !== "" && newUsername !== "" && newPassword !== "" && firstName.length < 255 && lastName.length < 255 && newUsername.length < 255 && newPassword.length < 255)
     {
       Axios.post(`${port}/api/register`, {
         firstName: firstName, 

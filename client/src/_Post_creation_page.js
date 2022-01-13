@@ -25,7 +25,7 @@ function _Post_creation_page()
             date: formatted_date
         }
 
-        //this is a terrible if statement :(
+        //this is a terrible if statement :(, should be incorperated backend
         if(postTitle !== "" && postContent !== "" && localStorage.getItem("token") !== null && postTitle.length < 10000 && postContent.length < 100000) {
             //check if user authenticated before posting
             Axios.get(`${port}/isUserAuth`, {headers: {
