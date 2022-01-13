@@ -27,7 +27,7 @@ class _Content_page extends Component{
             Axios.post(`${port}/api/getallusers`).then((res) => {   
                 // console.log('usernames' + res.data)       
                 this.setState({ usernames: res.data }, () => this.updateDisplayedPosts());
-                //problem with async here
+                //problem with async here, this is a terrible solution but a quick one
             })
         )
     }

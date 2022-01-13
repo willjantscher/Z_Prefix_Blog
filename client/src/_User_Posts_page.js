@@ -30,10 +30,7 @@ class _User_Posts_page extends Component{
                     Axios.post(`${port}/api/getuserposts`,{
                         id: localStorage.getItem("id")
                     }).then((res) => {
-                        this.setState({ posts: res.data.reverse()})
-                    }).then((res) => {
-                        // console.log(this.state.posts)
-                        this.updateDisplayedPosts();
+                        this.setState({ posts: res.data.reverse()}, () => this.updateDisplayedPosts())
                     })
                 } else {    
                     console.log("user not authorized")
@@ -43,32 +40,34 @@ class _User_Posts_page extends Component{
 
     //update property where posts are pulled from when rendering page
     updateDisplayedPosts = () => {
-        let displayedPosts = [];
-        console.log("updating displayed posts")
+        if(this.state.posts !== null) {
+            let displayedPosts = [];
+            console.log("updating displayed posts")
 
-        this.state.posts.forEach(post => {
-            let thisPost = {
-                id: "",
-                user: "",
-                title: "",
-                content: "",
-                creationDate: ""                
-            }
+            this.state.posts.forEach(post => {
+                let thisPost = {
+                    id: "",
+                    user: "",
+                    title: "",
+                    content: "",
+                    creationDate: ""                
+                }
 
-            let curtailedContent;
-            if(post.content.length > 100) {
-                curtailedContent = post.content.substring(0,100) + "...";
-            } else {
-                curtailedContent = post.content
-            }
+                let curtailedContent;
+                if(post.content.length > 100) {
+                    curtailedContent = post.content.substring(0,100) + "...";
+                } else {
+                    curtailedContent = post.content
+                }
 
-            thisPost.id = post.id;
-            thisPost.title = post.title;
-            thisPost.content = curtailedContent;
-            thisPost.creationDate = post.creationDate;
-            displayedPosts.push(thisPost);
-        });
-        this.setState({displayedPosts: displayedPosts})
+                thisPost.id = post.id;
+                thisPost.title = post.title;
+                thisPost.content = curtailedContent;
+                thisPost.creationDate = post.creationDate;
+                displayedPosts.push(thisPost);
+            });
+            this.setState({displayedPosts: displayedPosts})
+        }
     }
 
     expandPost = (e) => {
