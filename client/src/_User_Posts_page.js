@@ -4,7 +4,7 @@ import './App.css';
 import TextareaAutosize from 'react-textarea-autosize';
 // const port = "http://localhost:8080"
 // const port = "https://jantscher-z-prefix-blog.herokuapp.com"
-require('...dotenv').config()
+require('dotenv').config()
 const port = process.env.PORT || 8080;
 
 class _User_Posts_page extends Component{
