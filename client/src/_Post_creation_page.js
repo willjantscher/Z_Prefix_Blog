@@ -25,7 +25,8 @@ function _Post_creation_page()
             date: formatted_date
         }
 
-        if(postTitle !== "" && postContent !== "" && localStorage.getItem("token") !== null) {
+        //this is a terrible if statement :(
+        if(postTitle !== "" && postContent !== "" && localStorage.getItem("token") !== null && postTitle.length < 10000 && postContent.length < 100000) {
             //check if user authenticated before posting
             Axios.get(`${port}/isUserAuth`, {headers: {
                 "x-access-token": localStorage.getItem("token"),
