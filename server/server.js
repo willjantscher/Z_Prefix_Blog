@@ -1,12 +1,12 @@
 const express = require("express")
-const mongoose = require("mongoose")
+const mysql = require("mysql");
 const bodyParser = require("body-parser")
 const cors = require ("cors")
 const app = express();
-const mysql = require("mysql");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const jwt = require("jsonwebtoken"); 
+require('dotenv').config()
 
 // port during dev
 // const port = 3001;
@@ -16,10 +16,26 @@ const PORT = process.env.PORT || 8080;
 const {encrypt, decrypt} = require("./EncryptionHandler");
 
 //access internet db
-mongoose.connect(process.env.MONGODB_URI || 'http://localhost:8080', {
-    userNewUrlParser: true,
-    useUnifiedToppology: true
-});
+const db = mysql.createConnection({
+    host: "us-cdbr-east-05.cleardb.net",
+    user: "b76457c30cc8ea",
+    password: "7dfff6d3",
+    database: "heroku_a4405003a2a182f",
+})
+//local db
+// const db = mysql.createPool({
+//     host: "localhost",
+//     user: "root",
+//     password: "re5202lo",
+//     database: "blogDb",
+// });
+
+
+// mongoose.connect(process.env.MONGO_URI || 'http://localhost:8080', {
+//     userNewUrlParser: true,
+//     useUnifiedToppology: true
+// }).then(console.log('db connected'))
+// .catch(err => console.error(err));
 
 //if it is on heroku, access build here
 if (process.env.NODE_ENV === 'production') {
@@ -27,12 +43,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 
-const db = mysql.createPool({
-    host: "localhost",
-    user: "root",
-    password: "re5202lo",
-    database: "blogDb",
-});
+
 
 app.use(cors({
     origin: ["http://localhost:3000"],
